@@ -3,23 +3,36 @@
 <head>
   <title> Main </title>
   <link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
-  <link rel= "stylesheet" href="/resources/mainpage.css" >
-  <!-- <script src="path/to/jquery.min.js"></script>
-  <script src="path/to/jquery.sliphover.min.js"></script> -->
+  <link rel= "stylesheet" href="mainpage.css" >
+  <script src="path/to/jquery.min.js"></script>
+  <script src="path/to/jquery.sliphover.min.js"></script>
 </head>
 
 <body>
-<div id="fixedheader">
+<div id="fixedheader"
   <div id="header">
     <h1> #Goals </h1>
   </div>
 
   <div id="links">
   <p>
-    <a href= "/templates/profile.html"> My Profile </a>
+    <a href= "profile.html"> My Profile </a>
     <br>
-    <a href= "/templates/feed.html"> Feed </a>
+    <a href= "feed.html"> Feed </a>
   </div>
+
+  <form method="post" action ="">
+     <h3>Enter your username: <input type="text" name="username"/></h3>
+     <h3>Enter your email: <input type="text" name="email"/></h3>
+     <h3>Select: </h3>
+     <input type="checkbox" name="terms" value= "True"> I agree to the terms and conditions
+ <br>
+ <input type="checkbox" name="deals" value= "True" > Send me more info!
+     <h3>Who referred you to us?<input type="text" name="referral"/></h3>
+<h3><input type="checkbox" name="student"  value= "True">
+  Check here if you're a student (#discounts)<br> </h3>
+  <p><input type="submit" value="Submit" ></p>
+</form>
 </div>
 </body>
 </html>
