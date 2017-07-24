@@ -16,7 +16,7 @@
 #
 import webapp2
 import jinja2
-from goalsDatabase import CreateGoal
+from goals-database import CreateGoal
 
 env=jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
 
@@ -29,12 +29,14 @@ class MainHandler(webapp2.RequestHandler):
 #     def get(self):
 #
 #
-class CreateGoals(webapp2.RequestHandler):
+class CreateGoals(webbapp2.requestHandler):
      def get(self):
         goal1 = CreateGoal(goal ="The first goal")
 
         key = goal1.put()
         stored = key.get()
+
+        goal = CreateGoal(goal=self.request.get('goal'), timePlanned = datetime.time(int(self.request.get('hour')), int(self.request.get('minute'))).put()
         # VideoRating(id = 'Gangnam Style',likes = 133,dislikes = 23).put()
         # VideoRating(id = 'Cuet Cats',likes = 1234,dislikes = 24).put()
         # VideoRating(id = 'Cute dogs',likes = 345,dislikes = 21).put()
@@ -42,6 +44,5 @@ class CreateGoals(webapp2.RequestHandler):
         #
         self.response.write('Done')
 app = webapp2.WSGIApplication([
-    ('/', MainHandler),
-    ('/create_goal', CreateGoals)
+    ('/', MainHandler)
 ], debug=True)
