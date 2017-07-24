@@ -3,5 +3,5 @@ from datetime import time
 
 class CreateGoal(ndb.Model):
     goal = ndb.StringProperty()
-    # timeHours = ndb.IntegerProperty()
-    # timeMinutes = ndb.IntegerProperty()
+    timeHours = ndb.IntegerProperty()
+    timeMinutes = ndb.IntegerProperty()

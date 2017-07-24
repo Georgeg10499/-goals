@@ -30,16 +30,21 @@ class MainHandler(webapp2.RequestHandler):
 #
 #
 class CreateGoals(webapp2.RequestHandler):
-    #  def get(self):
-    #     goal1 = CreateGoal(goal ="The first goal")
-     #
-    #     key = goal1.put()
-    #     stored = key.get()
      def get(self):
+        #goal1 = CreateGoal(goal ="The first goal")
         template = env.get_template('main.html')
         self.response.write(template.render())
-        #goal = CreateGoal(goal=self.request.get('goal'),  timeHours= int(self.request.get('hour'), timeMinutes =  int(self.request.get('minutes')))).put()
-        goal = CreateGoal(goal=self.request.get('goal')).put()
+
+     def post(self):
+        results_templates = env.get_template('results.html')
+
+        goal = CreateGoal(goal=self.request.get('goal'),
+                          timeHours= int(self.request.get('hour')),
+                          timeMinutes =  int(self.request.get('minutes'))
+                         ).put()
+        goal_display = goal.get()
+        self.response.write(results.html.render(goal_display))
+        #goal = CreateGoal(goal=self.request.get('goal')).put()
         # VideoRating(id = 'Gangnam Style',likes = 133,dislikes = 23).put()
         # VideoRating(id = 'Cuet Cats',likes = 1234,dislikes = 24).put()
         # VideoRating(id = 'Cute dogs',likes = 345,dislikes = 21).put()
