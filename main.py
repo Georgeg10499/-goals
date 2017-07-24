@@ -35,7 +35,7 @@ class CreateGoals(webbapp2.requestHandler):
 
         key = goal1.put()
         stored = key.get()
-
+        
         goal = CreateGoal(goal=self.request.get('goal'), timePlanned = datetime.time(int(self.request.get('hour')), int(self.request.get('minute')))).put()
         # VideoRating(id = 'Gangnam Style',likes = 133,dislikes = 23).put()
         # VideoRating(id = 'Cuet Cats',likes = 1234,dislikes = 24).put()
