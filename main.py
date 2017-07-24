@@ -16,7 +16,7 @@
 #
 import webapp2
 import jinja2
-from goalsDatabase import CreateGoal
+from goals-database import CreateGoal
 
 env=jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
 
@@ -53,6 +53,5 @@ class CreateGoals(webapp2.RequestHandler):
         self.response.write('Done')
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler),
-    ('/create_goal',CreateGoals)
+    ('/', MainHandler)
 ], debug=True)
