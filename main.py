@@ -42,5 +42,6 @@ class CreateGoals(webbapp2.requestHandler):
         #
         self.response.write('Done')
 app = webapp2.WSGIApplication([
-    ('/', MainHandler)
+    ('/', MainHandler),
+    ('/create_goal', CreateGoals)
 ], debug=True)
