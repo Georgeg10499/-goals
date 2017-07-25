@@ -94,7 +94,21 @@ class CreateUser(webapp2.RequestHandler):
 class TestHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write('Hello')
+        # Your Account SID from twilio.com/console
+        account_sid = "AC421e208e540df7fc2f79ece8da7ef47a"
+        # Your Auth Token from twilio.com/console
+        auth_token  = "8e0096db271053be309e3308653ed7bf"
 
+        # client = Client(account_sid, auth_token)
+        #
+        # message = client.messages.create(
+        #     to="+18188541422",
+        #     from_="+19095528646",
+        #     body="Hello from Python!")
+        #
+        # print(message.sid)
+        url = '/2010-04-01/Accounts/%s/Messages' % account_sid
+        self.response.write(url)
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
