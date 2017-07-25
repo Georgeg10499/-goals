@@ -17,14 +17,11 @@
 import webapp2
 import jinja2
 import logging
-import urllib
-import base64
-from google.appengine.api import urlfetch
 from datetime import datetime , timedelta
 from goalsDatabase import Goal
 from goalsDatabase import Profile
 from goalsDatabase import User
-from twilio.rest import Client
+
 
 env=jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
 
@@ -95,26 +92,9 @@ class CreateUser(webapp2.RequestHandler):
         }
         self.response.write(_templates.render(user))
 
-class TestHandler(webapp2.RequestHandler):
-    def get(self):
-        self.response.write('Hello')
-        # Your Account SID from twilio.com/console
-        account_sid = "AC421e208e540df7fc2f79ece8da7ef47a"
-        # Your Auth Token from twilio.com/console
-        auth_token  = "8e0096db271053be309e3308653ed7bf"
-
-        url = 'https://api.twilio.com/2010-04-01/Accounts/%s/Messages' % account_sid
-        payload_dict = {'To': '+18188541422', 'From': '+19095528646', 'Body': 'Hello'}
-        payload = urllib.urlencode(payload_dict)
-        authorization_header = "Basic %s" % base64.b64encode("%s:%s" % (account_sid, auth_token))
-        urlfetch.fetch(url, payload=payload, headers={
-        "Authorization": authorization_header
-        }, method="POST", validate_certificate=True)
-
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/create_goal', CreateGoals),
     ('/create_profile', CreateProfile),
     ('/create_user',CreateUser),
-    ('/test', TestHandler),
 ], debug=True)
