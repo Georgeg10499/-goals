@@ -59,11 +59,16 @@ class CreateGoals(webapp2.RequestHandler):
         goal = Goal(target=self.request.get('goal'),
                     expected_time = (goal_end_time))
         goal.put()
+        final_time = datetime.now(tz = pytz.utc) + timedelta(hours = timeHours, minutes = timeMinutes)
+        final_time = final_time.astimezone(timezone('US/Pacific'))
+
+        goal.expected_time = final_time
 
         goal_display = {
             'goal': goal,
         }
         self.response.write(results_templates.render(goal_display))
+
         #goal.put()
         #goal = CreateGoal(goal=self.request.get('goal')).put()
 
@@ -86,8 +91,6 @@ class CreateProfile(webapp2.RequestHandler):
 
 class Feed(webapp2.RequestHandler):
     def get(self):
-        template = env.get_template('feed.html')
-        self.response.write(template.render())
         goals = Goal.query().fetch()
         # goals_dict = {}
         # for task in goals:
