@@ -5,3 +5,7 @@ class Goal(ndb.Model):
     goal = ndb.StringProperty()
     timeHours = ndb.IntegerProperty()
     timeMinutes = ndb.IntegerProperty()
+
+class Profile(ndb.Model):
+    name = ndb.StringProperty()
+    username = ndb.StringProperty()
