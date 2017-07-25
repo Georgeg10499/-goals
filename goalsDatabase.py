@@ -8,4 +8,7 @@ class Goal(ndb.Model):
 
 class Profile(ndb.Model):
     name = ndb.StringProperty()
+
+
+class User(ndn.Model):
     username = ndb.StringProperty()

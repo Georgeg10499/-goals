@@ -18,6 +18,7 @@ import webapp2
 import jinja2
 from goalsDatabase import Goal
 from goalsDatabase import Profile
+from goalsDatabase import User
 
 env=jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
 
@@ -59,9 +60,7 @@ class CreateProfile(webapp2.RequestHanler):
     def post(self):
         results_templates = env.get_template('profileResults.html')
 
-        profile = Profile(name=self.request.get('name'),
-                          username=self.request.get('username'),
-                         ).put()
+        profile = Profile(name=self.request.get('name')).put()
         profile_display = {
             'profile': profile,
         }
@@ -73,7 +72,20 @@ class Feed(webapp2.RequestHandler):
         # goals_dict = {}
         # for task in goals:
 
-class 
+class CreateUser(webapp2.RequestHandler):
+    def get(self):
+        template = env.get_template('user.html')
+        self.response.write(template.render())
+
+    def post(self):
+        results_templates = env.get_template('.html')
+
+        profile = Profile(username=self.request.get('username')).put()
+        profile_display = {
+            'user': user,
+        }
+        self.response.write(_templates.render(user))
+
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
