@@ -10,5 +10,5 @@ class Profile(ndb.Model):
     name = ndb.StringProperty()
 
 
-class User(ndn.Model):
+class User(ndb.Model):
     username = ndb.StringProperty()
