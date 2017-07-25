@@ -94,5 +94,7 @@ class CreateUser(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/create_goal', CreateGoals)
+    ('/create_goal', CreateGoals),
+    ('/create_profile', CreateProfile),
+    ('/create_user',CreateUser)
 ], debug=True)
