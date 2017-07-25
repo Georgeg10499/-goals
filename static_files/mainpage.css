@@ -1,11 +1,12 @@
 /* Main Page Style */
+@import url('https://fonts.googleapis.com/css?family=Quicksand');
 #fixedheader{
-
+font-family: 'Quicksand', sans-serif;
 }
 
 #header{
   color: white;
-  
+
 }
 
 #links{
