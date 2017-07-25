@@ -24,6 +24,7 @@ from goalsDatabase import Goal
 from goalsDatabase import Profile
 from goalsDatabase import User
 
+
 env=jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
 
 class MainHandler(webapp2.RequestHandler):
@@ -104,11 +105,6 @@ class CreateUser(webapp2.RequestHandler):
             'user': user,
         }
         self.response.write(_templates.render(user))
-
-class TestHandler(webapp2.RequestHandler):
-    def get(self):
-        self.response.write('Hello')
-
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
