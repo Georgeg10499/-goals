@@ -16,6 +16,8 @@
 #
 import webapp2
 import jinja2
+import logging
+from datetime import datetime , timedelta
 from goalsDatabase import Goal
 from goalsDatabase import Profile
 from goalsDatabase import User
@@ -40,14 +42,17 @@ class CreateGoals(webapp2.RequestHandler):
      def post(self):
         results_templates = env.get_template('results.html')
 
-        goal = Goal(goal=self.request.get('goal'),
-                          timeHours=int(self.request.get('hour')),
-                          timeMinutes=int(self.request.get('minutes'))
-                         ).put()
+        goal = Goal(target=self.request.get('goal'),
+                   timeHours=int(self.request.get('hour')),
+                   timeMinutes=int(self.request.get('minutes')))
+
+        goal_end_time = datetime.now() + timedelta(hours = goal.timeHours)
+        logging.info('The current time'+ '{:%H:%M:%S}'.format(datetime.now()))
+        logging.info('The new goal time'+ '{:%H:%M:%S}'.format(goal_end_time))
         goal_display = {
             'goal': goal,
         }
-        self.response.write(results_templates.render(goal))
+        self.response.write(results_templates.render(goal_display))
         #goal = CreateGoal(goal=self.request.get('goal')).put()
 
         self.response.write('Done')
@@ -94,5 +99,7 @@ class TestHandler(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/create_goal', CreateGoals),
-    ('/test', TestHandler)
+    ('/create_profile', CreateProfile),
+    ('/create_user',CreateUser),
+    ('/test', TestHandler),
 ], debug=True)
