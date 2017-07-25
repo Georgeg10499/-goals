@@ -17,6 +17,8 @@
 import webapp2
 import jinja2
 from goalsDatabase import Goal
+from goalsDatabase import Profile
+from goalsDatabase import User
 
 env=jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
 
@@ -31,7 +33,7 @@ class MainHandler(webapp2.RequestHandler):
 #
 class CreateGoals(webapp2.RequestHandler):
      def get(self):
-        goal1 = Goal(goal ="The first goal")
+        #goal1 = Goal(goal ="The first goal")
         template = env.get_template('main.html')
         self.response.write(template.render())
 
@@ -47,12 +49,43 @@ class CreateGoals(webapp2.RequestHandler):
         }
         self.response.write(results_templates.render(goal))
         #goal = CreateGoal(goal=self.request.get('goal')).put()
-        # VideoRating(id = 'Gangnam Style',likes = 133,dislikes = 23).put()
-        # VideoRating(id = 'Cuet Cats',likes = 1234,dislikes = 24).put()
-        # VideoRating(id = 'Cute dogs',likes = 345,dislikes = 21).put()
-        # VideoRating(id = 'Weird AI',likes = 21445,dislikes = 0).put()
-        #
+
         self.response.write('Done')
+
+class CreateProfile(webapp2.RequestHanler):
+    def get(self):
+        template = env.get_template('profile.html')
+        self.response.write(template.render())
+
+    def post(self):
+        results_templates = env.get_template('profileResults.html')
+
+        profile = Profile(name=self.request.get('name')).put()
+        profile_display = {
+            'profile': profile,
+        }
+        self.response.write(profileResults_templates.render(profile))
+
+class Feed(webapp2.RequestHandler):
+    def get(self):
+        goals = Goal.query().fetch()
+        # goals_dict = {}
+        # for task in goals:
+
+class CreateUser(webapp2.RequestHandler):
+    def get(self):
+        template = env.get_template('user.html')
+        self.response.write(template.render())
+
+    def post(self):
+        results_templates = env.get_template('.html')
+
+        profile = Profile(username=self.request.get('username')).put()
+        profile_display = {
+            'user': user,
+        }
+        self.response.write(_templates.render(user))
+
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
