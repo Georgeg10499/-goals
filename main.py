@@ -97,10 +97,15 @@ class CreateUser(webapp2.RequestHandler):
         }
         self.response.write(_templates.render(user))
 
+class TestHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.write('Hello')
+
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/create_goal', CreateGoals),
     ('/create_profile', CreateProfile),
-    ('/create_user',CreateUser)
+    ('/create_user',CreateUser),
+    ('/test', TestHandler),
 ], debug=True)
