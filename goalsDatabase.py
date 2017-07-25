@@ -3,8 +3,8 @@ from datetime import time
 
 class Goal(ndb.Model):
     target = ndb.StringProperty()
-    timeHours = ndb.IntegerProperty()
-    timeMinutes = ndb.IntegerProperty()
+    expected_time = ndb.DateProperty()
+
 
 class Profile(ndb.Model):
     name = ndb.StringProperty()

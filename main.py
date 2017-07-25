@@ -18,6 +18,8 @@ import webapp2
 import jinja2
 import logging
 from datetime import datetime , timedelta
+from pytz import timezone
+import pytz
 from goalsDatabase import Goal
 from goalsDatabase import Profile
 from goalsDatabase import User
@@ -42,13 +44,17 @@ class CreateGoals(webapp2.RequestHandler):
      def post(self):
         results_templates = env.get_template('results.html')
 
-        goal = Goal(target=self.request.get('goal'),
-                   timeHours=int(self.request.get('hour')),
-                   timeMinutes=int(self.request.get('minutes')))
+        timeHours=int(self.request.get('hour'))
+        timeMinutes=int(self.request.get('minutes'))
 
-        goal_end_time = datetime.now() + timedelta(hours = goal.timeHours)
-        logging.info('The current time'+ '{:%H:%M:%S}'.format(datetime.now()))
+        goal_end_time = datetime.now(tz = pytz.utc) + timedelta(hours = timeHours, minutes = timeMinutes)
+        goal_end_time = goal_end_time.astimezone(timezone('US/Pacific'))
+        logging.info('The current time'+ '{:%H:%M:%S}'.format(datetime.now(tz = pytz.utc)))
         logging.info('The new goal time'+ '{:%H:%M:%S}'.format(goal_end_time))
+
+        goal = Goal(target=self.request.get('goal'),
+                   expected_time = (goal_end_time))
+
         goal_display = {
             'goal': goal,
         }
