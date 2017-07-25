@@ -3,7 +3,7 @@ from datetime import time
 
 class Goal(ndb.Model):
     target = ndb.StringProperty()
-    expected_time = ndb.DateProperty()
+    expected_time = ndb.DateTimeProperty()
 
 
 class Profile(ndb.Model):

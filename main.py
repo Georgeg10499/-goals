@@ -47,20 +47,20 @@ class CreateGoals(webapp2.RequestHandler):
         timeHours=int(self.request.get('hour'))
         timeMinutes=int(self.request.get('minutes'))
 
-        goal_end_time = datetime.now(tz = pytz.utc) + timedelta(hours = timeHours, minutes = timeMinutes)
-        goal_end_time = goal_end_time.astimezone(timezone('US/Pacific'))
+        goal_end_time = datetime.now() + timedelta(hours = timeHours, minutes = timeMinutes)
+        #goal_end_time = goal_end_time.astimezone(timezone('US/Pacific'))
         logging.info('The current time'+ '{:%H:%M:%S}'.format(datetime.now(tz = pytz.utc)))
         logging.info('The new goal time'+ '{:%H:%M:%S}'.format(goal_end_time))
 
         goal = Goal(target=self.request.get('goal'),
                     expected_time = (goal_end_time))
-        #goal.put()
+        goal.put()
 
         goal_display = {
-            'currrent_goal': goal,
+            'goal': goal,
         }
         self.response.write(results_templates.render(goal_display))
-        goal.put()
+        #goal.put()
         #goal = CreateGoal(goal=self.request.get('goal')).put()
 
         self.response.write('Done')
