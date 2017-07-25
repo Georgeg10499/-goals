@@ -48,9 +48,15 @@ body {
 }
 
 .box{
+  margin-bottom: -10px;
   margin: 10px;
   background-color: #DCD0c0;
   border: 5px solid white;
+  height: 250px;
+  width: 250px;
+  border-radius: 75%;
+  justify-content: center;
+  text-align: center;
 }
 
 #content {
@@ -69,7 +75,8 @@ body {
   margin: 10px;
 }
 
-#right{
+.pic{
+  border-radius: 75%;
 }
 
 .post{

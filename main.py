@@ -53,12 +53,14 @@ class CreateGoals(webapp2.RequestHandler):
         logging.info('The new goal time'+ '{:%H:%M:%S}'.format(goal_end_time))
 
         goal = Goal(target=self.request.get('goal'),
-                   expected_time = (goal_end_time))
+                    expected_time = (goal_end_time))
+        #goal.put()
 
         goal_display = {
-            'goal': goal,
+            'currrent_goal': goal,
         }
         self.response.write(results_templates.render(goal_display))
+        goal.put()
         #goal = CreateGoal(goal=self.request.get('goal')).put()
 
         self.response.write('Done')
@@ -71,7 +73,8 @@ class CreateProfile(webapp2.RequestHandler):
     def post(self):
         results_templates = env.get_template('profileResults.html')
 
-        profile = Profile(name=self.request.get('name')).put()
+        profile = Profile(name=self.request.get('name'))
+        profile.put()
         profile_display = {
             'profile': profile,
         }
@@ -108,4 +111,5 @@ app = webapp2.WSGIApplication([
     ('/create_profile', CreateProfile),
     ('/create_user',CreateUser),
     ('/test', TestHandler),
+    ('/feed', Feed)
 ], debug=True)
