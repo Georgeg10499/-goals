@@ -52,7 +52,7 @@ class CreateGoals(webapp2.RequestHandler):
 
         self.response.write('Done')
 
-class CreateProfile(webapp2.RequestHanler):
+class CreateProfile(webapp2.RequestHandler):
     def get(self):
         template = env.get_template('profile.html')
         self.response.write(template.render())
@@ -86,8 +86,13 @@ class CreateUser(webapp2.RequestHandler):
         }
         self.response.write(_templates.render(user))
 
+class TestHandler(webapp2.RequestHandler):
+    def get(self):
+        self.response.write('Hello')
+
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
-    ('/create_goal', CreateGoals)
+    ('/create_goal', CreateGoals),
+    ('/test', TestHandler)
 ], debug=True)
