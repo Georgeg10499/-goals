@@ -109,6 +109,12 @@ class TestHandler(webapp2.RequestHandler):
         # print(message.sid)
         url = '/2010-04-01/Accounts/%s/Messages' % account_sid
         self.response.write(url)
+        payload_dict = {'To': '+18188541422', 'From': '+19095528646', 'Body': 'Hello'}
+        payload = urllib.urlencode(payload_dict)
+        authorization_header = "Basic %s" % base64.b64encode("%s:%s" % (account_sid, password))
+        urlfetch.fetch(url, payload=payload, headers={
+          "Authorization": authorization_header
+        }, method="POST")
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
