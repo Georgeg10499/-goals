@@ -8,7 +8,7 @@ class Goal(ndb.Model):
     username = ndb.StringProperty()
 
 class User(ndb.Model):
-    name = ndb.StringProperty()
     username = ndb.StringProperty()
     phone_number = ndb.StringProperty()
-    
+    quote = ndb.StringProperty()
+    photo = ndb.StringProperty()
