@@ -175,6 +175,10 @@ class Feed(webapp2.RequestHandler):
         template = env.get_template('feed.html')
         self.response.write(template.render())
         goals = Goal.query().fetch()
+        data = ['']
+        for task in goals:
+          data.append(task.username)
+        self.response.write(template.render(data))
         # goals_dict = {}
         # for task in goals:
 
