@@ -80,7 +80,8 @@ class CreateGoals(webapp2.RequestHandler):
         logging.info('The new goal time'+ '{:%H:%M:%S}'.format(goal_end_time))
 
         goal = Goal(target=self.request.get('goal'),
-                    expected_time = (goal_end_time))
+                    expected_time = (goal_end_time),
+                    expected_day = self.request.get('day_of_goal'))
         goal.put()
         final_time = datetime.now(tz = pytz.utc) + timedelta(hours = timeHours, minutes = timeMinutes)
         final_time = final_time.astimezone(timezone('US/Pacific'))
@@ -144,10 +145,12 @@ class CreateUser(webapp2.RequestHandler):
             else:
                 self.response.write('''
                     Welcome to our site, %s!  Please sign up! <br>
-                    <form method="post" action="">
-                    <input type="text" name="username">
-                    <input type="text" name="phone_number">
-                    <input type="submit">
+                    <form method="post" action=""> <br>
+                    Enter your username:
+                    <input type="text" name="username"> <br>
+                    Enter your phone number:
+                    <input type="text" name="phone_number"> <br>
+                    <input type="submit"> 
                     </form><br> %s <br>
                     ''' % (email_address, signout_link_html))
         # Otherwise, the user isn't logged in!
