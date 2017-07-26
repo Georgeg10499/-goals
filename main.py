@@ -57,70 +57,6 @@ class MainHandler(webapp2.RequestHandler):
                 <a href="%s">Sign in</a>''' % (
                     users.create_login_url('/')))
 
-
-# class CreateUser(webbapp2.RequestHandler):
-#     def get(self):
-#
-#
-class CreateGoals(webapp2.RequestHandler):
-     def get(self):
-        #goal1 = Goal(goal ="The first goal")
-        template = env.get_template('main.html')
-        self.response.write(template.render())
-
-     def post(self):
-        results_templates = env.get_template('results.html')
-
-        timeHours=int(self.request.get('hour'))
-        timeMinutes=int(self.request.get('minutes'))
-
-        goal_end_time = datetime.now() + timedelta(hours = timeHours, minutes = timeMinutes)
-        #goal_end_time = goal_end_time.astimezone(timezone('US/Pacific'))
-        logging.info('The current time'+ '{:%H:%M:%S}'.format(datetime.now(tz = pytz.utc)))
-        logging.info('The new goal time'+ '{:%H:%M:%S}'.format(goal_end_time))
-
-        goal = Goal(target=self.request.get('goal'),
-                    expected_time = (goal_end_time),
-                    expected_day = self.request.get('day_of_goal'))
-        goal.put()
-        final_time = datetime.now(tz = pytz.utc) + timedelta(hours = timeHours, minutes = timeMinutes)
-        final_time = final_time.astimezone(timezone('US/Pacific'))
-
-        goal.expected_time = final_time
-
-        goal_display = {
-            'goal': goal,
-        }
-        self.response.write(results_templates.render(goal_display))
-
-        #goal.put()
-        #goal = CreateGoal(goal=self.request.get('goal')).put()
-
-        self.response.write('Done')
-
-class CreateProfile(webapp2.RequestHandler):
-    def get(self):
-        template = env.get_template('profile.html')
-        self.response.write(template.render())
-
-    def post(self):
-        results_templates = env.get_template('profileResults.html')
-
-        profile = Profile(name=self.request.get('user_name'))
-        profile.put()
-        profile_display = {
-            'profile': profile,
-        }
-        self.response.write(results_templates.render(profile_display))
-
-class Feed(webapp2.RequestHandler):
-    def get(self):
-        template = env.get_template('feed.html')
-        self.response.write(template.render())
-        goals = Goal.query().fetch()
-        # goals_dict = {}
-        # for task in goals:
-
 class CreateUser(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
@@ -176,9 +112,65 @@ class CreateUser(webapp2.RequestHandler):
         self.response.write('Thanks for signing up, %s! Click here to access the <a href="/"> site </a>' %
             cssi_user.username, )
 
-# class TokenHandler(webapp2.RequestHandler):
-#     def get(self):
+class CreateGoals(webapp2.RequestHandler):
+     def get(self):
+        #goal1 = Goal(goal ="The first goal")
+        template = env.get_template('main.html')
+        self.response.write(template.render())
 
+     def post(self):
+        results_templates = env.get_template('results.html')
+
+        timeHours=int(self.request.get('hour'))
+        timeMinutes=int(self.request.get('minutes'))
+
+        goal_end_time = datetime.now() + timedelta(hours = timeHours, minutes = timeMinutes)
+        #goal_end_time = goal_end_time.astimezone(timezone('US/Pacific'))
+        logging.info('The current time'+ '{:%H:%M:%S}'.format(datetime.now(tz = pytz.utc)))
+        logging.info('The new goal time'+ '{:%H:%M:%S}'.format(goal_end_time))
+
+        goal = Goal(target=self.request.get('goal'),
+                    expected_time = (goal_end_time),
+                    expected_day = self.request.get('day_of_goal'))
+        goal.put()
+        final_time = datetime.now(tz = pytz.utc) + timedelta(hours = timeHours, minutes = timeMinutes)
+        final_time = final_time.astimezone(timezone('US/Pacific'))
+
+        goal.expected_time = final_time
+
+        goal_display = {
+            'goal': goal,
+        }
+        self.response.write(results_templates.render(goal_display))
+
+        #goal.put()
+        #goal = CreateGoal(goal=self.request.get('goal')).put()
+
+        self.response.write('Done')
+
+class CreateProfile(webapp2.RequestHandler):
+    def get(self):
+        current_user = User.query(user.nickname == "")
+        template = env.get_template('profile.html')
+        self.response.write(template.render())
+
+    def post(self):
+        results_templates = env.get_template('profileResults.html')
+
+        profile = Profile(name=self.request.get('user_name'))
+        profile.put()
+        profile_display = {
+            'profile': profile,
+        }
+        self.response.write(results_templates.render(profile_display))
+
+class Feed(webapp2.RequestHandler):
+    def get(self):
+        template = env.get_template('feed.html')
+        self.response.write(template.render())
+        goals = Goal.query().fetch()
+        # goals_dict = {}
+        # for task in goals:
 
 class TestHandler(webapp2.RequestHandler):
     def get(self):
@@ -204,6 +196,6 @@ app = webapp2.WSGIApplication([
     ('/create_profile', CreateProfile),
     ('/create_user',CreateUser),
     ('/test', TestHandler),
-    ('/feed', Feed)
+    ('/feed', Feed),
     ('/token', TokenHandler)
 ], debug=True)
