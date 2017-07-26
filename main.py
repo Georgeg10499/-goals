@@ -106,12 +106,12 @@ class CreateProfile(webapp2.RequestHandler):
     def post(self):
         results_templates = env.get_template('profileResults.html')
 
-        profile = Profile(name=self.request.get('name'))
+        profile = Profile(name=self.request.get('user_name'))
         profile.put()
         profile_display = {
             'profile': profile,
         }
-        self.response.write(profileResults_templates.render(profile))
+        self.response.write(results_templates.render(profile_display))
 
 class Feed(webapp2.RequestHandler):
     def get(self):
@@ -145,10 +145,12 @@ class CreateUser(webapp2.RequestHandler):
             else:
                 self.response.write('''
                     Welcome to our site, %s!  Please sign up! <br>
-                    <form method="post" action="">
-                    <input type="text" name="username">
-                    <input type="text" name="phone_number">
-                    <input type="submit">
+                    <form method="post" action=""> <br>
+                    Enter your username:
+                    <input type="text" name="username"> <br>
+                    Enter your phone number:
+                    <input type="text" name="phone_number"> <br>
+                    <input type="submit"> 
                     </form><br> %s <br>
                     ''' % (email_address, signout_link_html))
         # Otherwise, the user isn't logged in!
