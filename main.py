@@ -27,6 +27,7 @@ from goalsDatabase import Goal
 from goalsDatabase import Profile
 from goalsDatabase import User
 from automessages import reminder
+from google.appengine.api import users
 
 
 
@@ -34,8 +35,28 @@ env=jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        template = env.get_template('main.html')
-        self.response.write(template.render())
+        user = users.get_current_user()
+        template = env.get_template('user.html')
+        # If the user is logged in...
+        if user:
+            email_address = user.nickname()
+            # We could also do a standard query, but ID is special and it
+            # has a special method to retrieve entries using it.
+            cssi_user = User.get_by_id(user.user_id())
+            signout_link_html = '<a href="%s">sign out</a>' % (
+                users.create_logout_url('/'))
+            # If the user has previously been to our site, we greet them!
+            if cssi_user:
+                template = env.get_template('main.html')
+                self.response.write(template.render())
+            else:
+                self.redirect("/create_user")
+        else:
+            self.response.write('''
+                Please log in to use our site! <br>
+                <a href="%s">Sign in</a>''' % (
+                    users.create_login_url('/')))
+
 
 # class CreateUser(webbapp2.RequestHandler):
 #     def get(self):
@@ -102,6 +123,7 @@ class Feed(webapp2.RequestHandler):
 class CreateUser(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
+        template = env.get_template('user.html')
         # If the user is logged in...
         if user:
             email_address = user.nickname()
@@ -148,8 +170,8 @@ class CreateUser(webapp2.RequestHandler):
             # uniquenes (only one user in the datastore can have this ID.
             id=user.user_id())
         cssi_user.put()
-        self.response.write('Thanks for signing up, %s!' %
-            cssi_user.username)
+        self.response.write('Thanks for signing up, %s! Click here to access the <a href="/"> site </a>' %
+            cssi_user.username, )
 
 class TestHandler(webapp2.RequestHandler):
     def get(self):
