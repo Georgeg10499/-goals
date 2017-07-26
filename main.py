@@ -113,7 +113,7 @@ class SignUpHandler(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
         email_address = user.nickname()
-        template = env.get_template('singup.html')
+        template = env.get_template('signup.html')
         self.response.write(template.render())
 
 class CreateGoals(webapp2.RequestHandler):
@@ -152,7 +152,6 @@ class CreateGoals(webapp2.RequestHandler):
         #goal.put()
         #goal = CreateGoal(goal=self.request.get('goal')).put()
 
-        self.response.write('Done')
 
 class CreateProfile(webapp2.RequestHandler):
     def get(self):
@@ -160,15 +159,15 @@ class CreateProfile(webapp2.RequestHandler):
         template = env.get_template('profile.html')
         self.response.write(template.render())
 
-    def post(self):
-        results_templates = env.get_template('profileResults.html')
-
-        profile = Profile(name=self.request.get('user_name'))
-        profile.put()
-        profile_display = {
-            'profile': profile,
-        }
-        self.response.write(results_templates.render(profile_display))
+    # def post(self):
+    #     results_templates = env.get_template('profileResults.html')
+    #
+    #     profile = Profile(name=self.request.get('user_name'))
+    #     profile.put()
+    #     profile_display = {
+    #         'profile': profile,
+    #     }
+    #     self.response.write(results_templates.render(profile_display))
 
 class Feed(webapp2.RequestHandler):
     def get(self):
