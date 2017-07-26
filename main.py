@@ -25,7 +25,7 @@ from pytz import timezone
 import pytz
 from goalsDatabase import Goal
 from goalsDatabase import User
-from automessages import reminder
+from functions import 
 from google.appengine.api import users
 
 
