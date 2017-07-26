@@ -26,7 +26,7 @@ import pytz
 from goalsDatabase import Goal
 from goalsDatabase import Profile
 from goalsDatabase import User
-from google.appengine.api import users
+from automessages import reminder
 
 
 
@@ -101,55 +101,17 @@ class Feed(webapp2.RequestHandler):
 
 class CreateUser(webapp2.RequestHandler):
     def get(self):
-        user = users.get_current_user()
-        # If the user is logged in...
-        if user:
-            email_address = user.nickname()
-            # We could also do a standard query, but ID is special and it
-            # has a special method to retrieve entries using it.
-            cssi_user = User.get_by_id(user.user_id())
-            signout_link_html = '<a href="%s">sign out</a>' % (
-                users.create_logout_url('/'))
-            # If the user has previously been to our site, we greet them!
-            if cssi_user:
-                self.response.write('''
-                    Welcome %s %s (%s)! <br> %s <br>''' % (
-                        cssi_user.username,
-                        cssi_user.phone_number,
-                        email_address,
-                        signout_link_html))
-            # If the user hasn't been to our site, we ask them to sign up
-            else:
-                self.response.write('''
-                    Welcome to our site, %s!  Please sign up! <br>
-                    <form method="post" action="">
-                    <input type="text" name="username">
-                    <input type="text" name="phone_number">
-                    <input type="submit">
-                    </form><br> %s <br>
-                    ''' % (email_address, signout_link_html))
-        # Otherwise, the user isn't logged in!
-        else:
-            self.response.write('''
-                Please log in to use our site! <br>
-                <a href="%s">Sign in</a>''' % (
-                    users.create_login_url('/')))
+        template = env.get_template('user.html')
+        self.response.write(template.render())
 
     def post(self):
-        user = users.get_current_user()
-        if not user:
-            # You shouldn't be able to get here without being logged in
-            self.error(500)
-            return
-        cssi_user = User(
-            username=self.request.get('username'),
-            phone_number=self.request.get('phone_number'),
-            # ID Is a special field that all ndb Models have, and esnures
-            # uniquenes (only one user in the datastore can have this ID.
-            id=user.user_id())
-        cssi_user.put()
-        self.response.write('Thanks for signing up, %s!' %
-            cssi_user.username)
+        results_templates = env.get_template('.html')
+
+        profile = Profile(username=self.request.get('username')).put()
+        profile_display = {
+            'user': user,
+        }
+        self.response.write(_templates.render(user))
 
 class TestHandler(webapp2.RequestHandler):
     def get(self):
