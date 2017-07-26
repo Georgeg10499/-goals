@@ -179,10 +179,10 @@ class TestHandler(webapp2.RequestHandler):
         # Your Account SID from twilio.com/console
         account_sid = "AC421e208e540df7fc2f79ece8da7ef47a"
         # Your Auth Token from twilio.com/console
-        auth_token  = "8e0096db271053be309e3308653ed7bf"
+        auth_token  = ""
 
         url = 'https://api.twilio.com/2010-04-01/Accounts/%s/Messages' % account_sid
-        payload_dict = {'To': '', 'From': '+19095528646', 'Body': 'Hello'}
+        payload_dict = {'To': '', 'From': '', 'Body': 'Hello'}
         payload = urllib.urlencode(payload_dict)
         authorization_header = "Basic %s" % base64.b64encode("%s:%s" % (account_sid, auth_token))
         urlfetch.fetch(url, payload=payload, headers={
