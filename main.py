@@ -123,7 +123,7 @@ class Feed(webapp2.RequestHandler):
 class CreateUser(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
-        template = env.get_template('user.html')
+        template = env.get_template('profile.html')
         # If the user is logged in...
         if user:
             email_address = user.nickname()
@@ -149,7 +149,7 @@ class CreateUser(webapp2.RequestHandler):
                     <input type="text" name="username"> <br>
                     Enter your phone number:
                     <input type="text" name="phone_number"> <br>
-                    <input type="submit"> 
+                    <input type="submit">
                     </form><br> %s <br>
                     ''' % (email_address, signout_link_html))
         # Otherwise, the user isn't logged in!
