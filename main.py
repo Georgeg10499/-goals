@@ -79,16 +79,7 @@ class CreateUser(webapp2.RequestHandler):
                         signout_link_html))
             # If the user hasn't been to our site, we ask them to sign up
             else:
-                self.response.write('''
-                    Welcome to our site, %s!  Please sign up! <br>
-                    <form method="post" action=""> <br>
-                    Enter your username:
-                    <input type="text" name="username"> <br>
-                    Enter your phone number:
-                    <input type="text" name="phone_number"> <br>
-                    <input type="submit">
-                    </form><br> %s <br>
-                    ''' % (email_address, signout_link_html))
+                self.redirect("/sign_up")
         # Otherwise, the user isn't logged in!
         else:
             self.response.write('''
