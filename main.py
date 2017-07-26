@@ -111,9 +111,10 @@ class CreateUser(webapp2.RequestHandler):
 
 class SignUpHandler(webapp2.RequestHandler):
     def get(self):
-        user = users.get_current_user()
-        email_address = user.nickname()
         template = env.get_template('signup.html')
+        user = users.get_current_user()
+        nick_name = user.nickname()
+        user_info_dict = { 'email_address' : nick_name }
         self.response.write(template.render())
 
 class CreateGoals(webapp2.RequestHandler):
