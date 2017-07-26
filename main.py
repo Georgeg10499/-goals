@@ -94,17 +94,17 @@ class CreateUser(webapp2.RequestHandler):
                     users.create_login_url('/')))
 
     def post(self):
-        # user = users.get_current_user()
+        user = users.get_current_user()
         # if not user:
         #     # You shouldn't be able to get here without being logged in
         cssi_user = User(
             username=self.request.get('username'),
             phone_number=self.request.get('phone_number'),
             quote=self.request.get('quote'),
-            photo=self.request.get('photo'))
+            photo=self.request.get('photo'),
             # ID Is a special field that all ndb Models have, and esnures
             # uniquenes (only one user in the datastore can have this ID.
-            # id=user.user_id())
+            id=user.user_id())
         cssi_user.put()
         self.response.write('Thanks for signing up, %s! Click here to access the <a href="/"> site </a>' %
             cssi_user.username, )
