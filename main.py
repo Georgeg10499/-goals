@@ -105,12 +105,12 @@ class CreateProfile(webapp2.RequestHandler):
     def post(self):
         results_templates = env.get_template('profileResults.html')
 
-        profile = Profile(name=self.request.get('name'))
+        profile = Profile(name=self.request.get('user_name'))
         profile.put()
         profile_display = {
             'profile': profile,
         }
-        self.response.write(profileResults_templates.render(profile))
+        self.response.write(results_templates.render(profile_display))
 
 class Feed(webapp2.RequestHandler):
     def get(self):
