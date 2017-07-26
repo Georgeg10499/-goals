@@ -109,6 +109,7 @@ class SignUpHandler(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
         template = env.get_template('singup.html')
+        self.response.write(template.render())
 
 class CreateGoals(webapp2.RequestHandler):
      def get(self):
