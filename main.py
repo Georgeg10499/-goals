@@ -25,7 +25,7 @@ from pytz import timezone
 import pytz
 from goalsDatabase import Goal
 from goalsDatabase import User
-from functions import addGoals
+#from functions import addGoals
 from google.appengine.api import users
 
 
