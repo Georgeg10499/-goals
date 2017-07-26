@@ -192,6 +192,8 @@ class TestHandler(webapp2.RequestHandler):
         "Authorization": authorization_header
         }, method="POST", validate_certificate=True)
 
+class TokenHandler(webapp2.RequestHandler):
+
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/create_goal', CreateGoals),
@@ -199,4 +201,5 @@ app = webapp2.WSGIApplication([
     ('/create_user',CreateUser),
     ('/test', TestHandler),
     ('/feed', Feed)
+    ('/token', TokenHandler)
 ], debug=True)
