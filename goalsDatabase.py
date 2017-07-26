@@ -7,11 +7,8 @@ class Goal(ndb.Model):
     # expected_day = ndb.DateProperty()
     username = ndb.StringProperty()
 
-class Profile(ndb.Model):
-    name = ndb.StringProperty()
-
 class User(ndb.Model):
+    name = ndb.StringProperty()
     username = ndb.StringProperty()
     phone_number = ndb.StringProperty()
-    quote = ndb.StringProperty()
-    photo = ndb.StringProperty()
+    

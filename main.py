@@ -24,7 +24,6 @@ from datetime import datetime , timedelta
 from pytz import timezone
 import pytz
 from goalsDatabase import Goal
-from goalsDatabase import Profile
 from goalsDatabase import User
 from automessages import reminder
 from google.appengine.api import users
