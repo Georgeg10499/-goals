@@ -44,10 +44,14 @@ class MainHandler(webapp2.RequestHandler):
             cssi_user = User.get_by_id(user.user_id())
             signout_link_html = '<a href="%s">sign out</a>' % (
                 users.create_logout_url('/'))
+            link = users.create_logout_url('/')
+            sign_out = {
+            'sign_out_link' : link}
+
             # If the user has previously been to our site, we greet them!
             if cssi_user:
                 template = env.get_template('main.html')
-                self.response.write(template.render())
+                self.response.write(template.render(sign_out))
             else:
                 self.redirect("/create_user")
         else:
@@ -111,7 +115,6 @@ class SignUpHandler(webapp2.RequestHandler):
         email_address = user.nickname()
         template = env.get_template('singup.html')
         self.response.write(template.render())
-
 
 class CreateGoals(webapp2.RequestHandler):
      def get(self):
