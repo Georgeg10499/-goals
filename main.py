@@ -77,18 +77,6 @@ class CreateUser(webapp2.RequestHandler):
                         cssi_user.phone_number,
                         email_address,
                         signout_link_html))
-            # If the user hasn't been to our site, we ask them to sign up
-            else:
-                self.response.write('''
-                    Welcome to our site, %s!  Please sign up! <br>
-                    <form method="post" action=""> <br>
-                    Enter your username:
-                    <input type="text" name="username"> <br>
-                    Enter your phone number:
-                    <input type="text" name="phone_number"> <br>
-                    <input type="submit">
-                    </form><br> %s <br>
-                    ''' % (email_address, signout_link_html))
         # Otherwise, the user isn't logged in!
         else:
             self.response.write('''
@@ -112,6 +100,8 @@ class CreateUser(webapp2.RequestHandler):
         self.response.write('Thanks for signing up, %s! Click here to access the <a href="/"> site </a>' %
             cssi_user.username, )
 
+class SignUpHandler(webapp2.RequestHandler):
+    
 class CreateGoals(webapp2.RequestHandler):
      def get(self):
         #goal1 = Goal(goal ="The first goal")
@@ -172,61 +162,6 @@ class Feed(webapp2.RequestHandler):
         # goals_dict = {}
         # for task in goals:
 
-<<<<<<< HEAD
-class CreateUser(webapp2.RequestHandler):
-    def get(self):
-        user = users.get_current_user()
-        template = env.get_template('profile.html')
-        # If the user is logged in...
-        if user:
-            email_address = user.nickname()
-            # We could also do a standard query, but ID is special and it
-            # has a special method to retrieve entries using it.
-            cssi_user = User.get_by_id(user.user_id())
-            signout_link_html = '<a href="%s">sign out</a>' % (
-                users.create_logout_url('/'))
-            # If the user has previously been to our site, we greet them!
-            if cssi_user:
-                self.response.write('''
-                    Welcome %s %s (%s)! <br> %s <br>''' % (
-                        cssi_user.username,
-                        cssi_user.phone_number,
-                        email_address,
-                        signout_link_html))
-            # If the user hasn't been to our site, we ask them to sign up
-            else:
-                self.response.write('''
-
-                    ''' % (email_address, signout_link_html))
-        # Otherwise, the user isn't logged in!
-        else:
-            self.response.write('''
-                Please log in to use our site! <br>
-                <a href="%s">Sign in</a>''' % (
-                    users.create_login_url('/')))
-
-    def post(self):
-        user = users.get_current_user()
-        if not user:
-            # You shouldn't be able to get here without being logged in
-            self.error(500)
-            return
-        cssi_user = User(
-            username=self.request.get('username'),
-            phone_number=self.request.get('phone_number'),
-            # ID Is a special field that all ndb Models have, and esnures
-            # uniquenes (only one user in the datastore can have this ID.
-            id=user.user_id())
-        cssi_user.put()
-        self.response.write('Thanks for signing up, %s! Click here to access the <a href="/"> site </a>' %
-            cssi_user.username, )
-
-# class TokenHandler(webapp2.RequestHandler):
-#     def get(self):
-
-
-=======
->>>>>>> d2e06a6485473fb89a49288dcd1a8045e53930e7
 class TestHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write('Hello')
@@ -243,8 +178,6 @@ class TestHandler(webapp2.RequestHandler):
         "Authorization": authorization_header
         }, method="POST", validate_certificate=True)
 
-
-
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/create_goal', CreateGoals),
@@ -252,5 +185,6 @@ app = webapp2.WSGIApplication([
     ('/create_user',CreateUser),
     ('/test', TestHandler),
     ('/feed', Feed),
-    ('/token', TokenHandler)
+    ('/token', TokenHandler),
+    ('/sign_up', SignUpHandler)
 ], debug=True)
