@@ -28,6 +28,7 @@ from goalsDatabase import Profile
 from goalsDatabase import User
 
 
+
 env=jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
 
 class MainHandler(webapp2.RequestHandler):
@@ -91,6 +92,8 @@ class CreateProfile(webapp2.RequestHandler):
 
 class Feed(webapp2.RequestHandler):
     def get(self):
+        template = env.get_template('feed.html')
+        self.response.write(template.render())
         goals = Goal.query().fetch()
         # goals_dict = {}
         # for task in goals:
