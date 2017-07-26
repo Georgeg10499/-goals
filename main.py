@@ -152,7 +152,7 @@ class CreateGoals(webapp2.RequestHandler):
 
 class CreateProfile(webapp2.RequestHandler):
     def get(self):
-        current_user = User.query(user.nickname == "")
+        user_query = User.query().fetch()
         template = env.get_template('profile.html')
         self.response.write(template.render())
 
