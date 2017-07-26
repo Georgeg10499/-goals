@@ -26,7 +26,8 @@ import pytz
 from goalsDatabase import Goal
 from goalsDatabase import Profile
 from goalsDatabase import User
-from google.appengine.api import users
+from automessages import reminder
+
 
 
 env=jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
