@@ -97,7 +97,8 @@ class CreateUser(webapp2.RequestHandler):
             return
         cssi_user = User(
             username=self.request.get('username'),
-            phone_number=self.request.get('phone_number'),
+            phone_number=self.request.get('phone_number')
+            ,
             # ID Is a special field that all ndb Models have, and esnures
             # uniquenes (only one user in the datastore can have this ID.
             id=user.user_id())
@@ -108,6 +109,7 @@ class CreateUser(webapp2.RequestHandler):
 class SignUpHandler(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
+        email_address = user.nickname()
         template = env.get_template('singup.html')
         self.response.write(template.render())
 

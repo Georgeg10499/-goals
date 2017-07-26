@@ -13,3 +13,5 @@ class Profile(ndb.Model):
 class User(ndb.Model):
     username = ndb.StringProperty()
     phone_number = ndb.StringProperty()
+    quote = ndb.StringProperty()
+    photo = ndb.StringProperty()
