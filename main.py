@@ -118,13 +118,16 @@ class Feed(webapp2.RequestHandler):
         template = env.get_template('feed.html')
         self.response.write(template.render())
         goals = Goal.query().fetch()
+
+        for task in goals:
+            self.response.write(feed_templates.render(goals))
         # goals_dict = {}
         # for task in goals:
 
 class CreateUser(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
-        template = env.get_template('profile.html')
+        template = env.get_template('user.html')
         # If the user is logged in...
         if user:
             email_address = user.nickname()
@@ -192,8 +195,6 @@ class TestHandler(webapp2.RequestHandler):
         "Authorization": authorization_header
         }, method="POST", validate_certificate=True)
 
-class TokenHandler(webapp2.RequestHandler):
-
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/create_goal', CreateGoals),
@@ -201,5 +202,4 @@ app = webapp2.WSGIApplication([
     ('/create_user',CreateUser),
     ('/test', TestHandler),
     ('/feed', Feed)
-    ('/token', TokenHandler)
 ], debug=True)
