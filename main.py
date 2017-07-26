@@ -123,7 +123,7 @@ class CreateGoals(webapp2.RequestHandler):
         self.response.write(template.render())
 
      def post(self):
-        results_templates = env.get_template('results.html')
+        results_templates = env.get_template('profile.html')
 
         timeHours=int(self.request.get('hour'))
         timeMinutes=int(self.request.get('minutes'))
@@ -135,6 +135,7 @@ class CreateGoals(webapp2.RequestHandler):
 
         goal = Goal(target=self.request.get('goal'),
                     expected_time = (goal_end_time),
+                    username=self.request.get("username")
                     # expected_day = self.request.get('day_of_goal')
                     )
         goal.put()
