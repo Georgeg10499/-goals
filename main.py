@@ -193,6 +193,5 @@ app = webapp2.WSGIApplication([
     ('/create_user',CreateUser),
     ('/test', TestHandler),
     ('/feed', Feed),
-    ('/token', TokenHandler),
     ('/sign_up', SignUpHandler)
 ], debug=True)
