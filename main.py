@@ -173,8 +173,16 @@ class CreateProfile(webapp2.RequestHandler):
 class Feed(webapp2.RequestHandler):
     def get(self):
         template = env.get_template('feed.html')
-        self.response.write(template.render())
         goals = Goal.query().fetch()
+        usernames = []
+        for task in goals:
+            usernames.append( {'name':task.username} )
+
+
+        data  = {'usernames':usernames }
+        #   data.append(task.username)
+        self.response.write(template.render(data))
+        # self.response.write(str(goals))
         # goals_dict = {}
         # for task in goals:
 

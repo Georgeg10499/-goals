@@ -20,6 +20,13 @@
         <a href= "create_profile"> My Profile </a>
       </div>
 
+      <div>
+        {% for user in usernames %}
+          <li>
+            {{ user.name }}
+          </li>
+        {% endfor %}
+      </div>
     </div>
   </body>
 </html>
