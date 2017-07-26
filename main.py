@@ -121,7 +121,7 @@ class TestHandler(webapp2.RequestHandler):
         auth_token  = "8e0096db271053be309e3308653ed7bf"
 
         url = 'https://api.twilio.com/2010-04-01/Accounts/%s/Messages' % account_sid
-        payload_dict = {'To': '+18188541422', 'From': '+19095528646', 'Body': 'Hello'}
+        payload_dict = {'To': '', 'From': '+19095528646', 'Body': 'Hello'}
         payload = urllib.urlencode(payload_dict)
         authorization_header = "Basic %s" % base64.b64encode("%s:%s" % (account_sid, auth_token))
         urlfetch.fetch(url, payload=payload, headers={
