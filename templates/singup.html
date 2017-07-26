@@ -5,15 +5,18 @@
     <title></title>
   </head>
   <body>
-    Welcome to our site, %s!  Please sign up! <br>
+    Welcome to our site, {{email_address}} !  Please sign up! <br>
     <form method="post" action=""> <br>
     Enter your username:
     <input type="text" name="username"> <br>
     Enter your phone number:
     <input type="text" name="phone_number"> <br>
-    
+    Enter a quote:
+    <input type="text" name="quote"> <br>
+    Enter a link to a photo:
+    <input type="text" name= "photo"> <br>
     <input type="submit">
-    </form><br> %s <br>
+    </form>
 
   </body>
 </html>
