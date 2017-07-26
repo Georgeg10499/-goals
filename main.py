@@ -176,8 +176,8 @@ class CreateUser(webapp2.RequestHandler):
         self.response.write('Thanks for signing up, %s! Click here to access the <a href="/"> site </a>' %
             cssi_user.username, )
 
-class TokenHandler(webapp2.RequestHandler):
-    def get(self):
+# class TokenHandler(webapp2.RequestHandler):
+#     def get(self):
 
 
 class TestHandler(webapp2.RequestHandler):
