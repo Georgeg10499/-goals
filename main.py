@@ -26,6 +26,7 @@ import pytz
 from goalsDatabase import Goal
 from goalsDatabase import Profile
 from goalsDatabase import User
+from google.appengine.api import users
 
 
 env=jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
@@ -112,17 +113,17 @@ class CreateUser(webapp2.RequestHandler):
             if cssi_user:
                 self.response.write('''
                     Welcome %s %s (%s)! <br> %s <br>''' % (
-                        cssi_user.first_name,
-                        cssi_user.last_name,
+                        cssi_user.username,
+                        cssi_user.phone_number,
                         email_address,
                         signout_link_html))
             # If the user hasn't been to our site, we ask them to sign up
             else:
                 self.response.write('''
                     Welcome to our site, %s!  Please sign up! <br>
-                    <form method="post" action="/">
-                    <input type="text" name="first_name">
-                    <input type="text" name="last_name">
+                    <form method="post" action="">
+                    <input type="text" name="username">
+                    <input type="text" name="phone_number">
                     <input type="submit">
                     </form><br> %s <br>
                     ''' % (email_address, signout_link_html))
@@ -140,14 +141,14 @@ class CreateUser(webapp2.RequestHandler):
             self.error(500)
             return
         cssi_user = User(
-            first_name=self.request.get('first_name'),
-            last_name=self.request.get('last_name'),
+            username=self.request.get('username'),
+            phone_number=self.request.get('phone_number'),
             # ID Is a special field that all ndb Models have, and esnures
             # uniquenes (only one user in the datastore can have this ID.
             id=user.user_id())
         cssi_user.put()
         self.response.write('Thanks for signing up, %s!' %
-            cssi_user.first_name)
+            cssi_user.username)
 
 class TestHandler(webapp2.RequestHandler):
     def get(self):

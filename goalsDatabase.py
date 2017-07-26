@@ -12,4 +12,4 @@ class Profile(ndb.Model):
 
 class User(ndb.Model):
     username = ndb.StringProperty()
-    phone_number = ndb.IntegerProperty()
+    phone_number = ndb.StringProperty()
