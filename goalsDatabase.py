@@ -4,6 +4,7 @@ from datetime import time
 class Goal(ndb.Model):
     target = ndb.StringProperty()
     expected_time = ndb.DateTimeProperty()
+    expected_day = ndb.DateProperty()
 
 
 class Profile(ndb.Model):
