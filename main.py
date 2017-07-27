@@ -139,7 +139,7 @@ class CreateProfile(webapp2.RequestHandler):
         goal_display.update({'user_info': user_info})
         template = env.get_template('profile.html')
         self.response.write(template.render(goal_display))
-        
+
 class Feed(webapp2.RequestHandler):
     def get(self):
         template = env.get_template('feed.html')
@@ -193,8 +193,8 @@ class GoalComplete (webapp2.RequestHandler):
         your_id = cssi_user.username
         user_goals = Goals.query(your_id).fetch()
 
-    def post(self):
-        temp =
+    # def post(self):
+    #     temp =
 
 class TestHandler(webapp2.RequestHandler):
     def get(self):
