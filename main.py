@@ -72,7 +72,7 @@ class CreateGoals(webapp2.RequestHandler):
         self.response.write(template.render())
 
      def post(self):
-        template = env.get_template('profile.html')
+        template = env.get_template('results.html')
         num_of_goals = int(self.request.get("number_of_goals"))
         goals_list = []
         for i in range(1,num_of_goals+1):
@@ -108,17 +108,17 @@ class CreateGoals(webapp2.RequestHandler):
                      ''' + filler + ''' <br> '''
             checkbox_counter += 1
 
-        user = users.get_current_user()
-        cssi_user = User.get_by_id(user.user_id())
-        user_info = { 'username' : cssi_user.username,
-                    'phone_number' : cssi_user.phone_number,
-                    'quote': cssi_user.quote,
-                    'photo' : cssi_user.photo,
-                    'goald' : cssi_user.goald,
-                    'goals_created' : cssi_user.goals_created,
-                    'goals_completed' : cssi_user.goals_completed
-                    }
-        goal_display.update({'user_info': user_info})
+        # user = users.get_current_user()
+        # cssi_user = User.get_by_id(user.user_id())
+        # user_info = { 'username' : cssi_user.username,
+        #             'phone_number' : cssi_user.phone_number,
+        #             'quote': cssi_user.quote,
+        #             'photo' : cssi_user.photo,
+        #             'goald' : cssi_user.goald,
+        #             'goals_created' : cssi_user.goals_created,
+        #             'goals_completed' : cssi_user.goals_completed
+        #             }
+        # goal_display.update({'user_info': user_info})
         self.response.write(template.render(goal_display))
 
 class CreateProfile(webapp2.RequestHandler):
