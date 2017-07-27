@@ -40,12 +40,11 @@ class CreateUser(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
         template = env.get_template('profile.html')
-
-            email_address = user.nickname()
-            cssi_user = User.get_by_id(user.user_id())
-            signout_link_html = '<a href="%s">sign out</a>' % (
+        email_address = user.nickname()
+        cssi_user = User.get_by_id(user.user_id())
+        signout_link_html = '<a href="%s">sign out</a>' % (
                 users.create_logout_url('/'))
-            self.redirect("/sign_up")
+        self.redirect("/sign_up")
 
     def post(self):
         user = users.get_current_user()
@@ -77,31 +76,36 @@ class CreateGoals(webapp2.RequestHandler):
         self.response.write(template.render())
 
      def post(self):
-        results_templates = env.get_template('results.html')
+        template = env.get_template('profile.html')
+        num_of_goals = int(self.request.get("number_of_goals"))
+        goals_list = []
+        for i in range(1,num_of_goals+1):
+            timeHours=int(self.request.get('hour' + str(i)))
+            timeMinutes=int(self.request.get('minutes' + str(i)))
 
-        timeHours=int(self.request.get('hour'))
-        timeMinutes=int(self.request.get('minutes'))
+            goal_end_time = datetime.now() + timedelta(hours = timeHours, minutes = timeMinutes)
+            #goal_end_time = goal_end_time.astimezone(timezone('US/Pacific'))
+            logging.info('The current time'+ '{:%H:%M:%S}'.format(datetime.now(tz = pytz.utc)))
+            logging.info('The new goal time'+ '{:%H:%M:%S}'.format(goal_end_time))
 
-        goal_end_time = datetime.now() + timedelta(hours = timeHours, minutes = timeMinutes)
-        #goal_end_time = goal_end_time.astimezone(timezone('US/Pacific'))
-        logging.info('The current time'+ '{:%H:%M:%S}'.format(datetime.now(tz = pytz.utc)))
-        logging.info('The new goal time'+ '{:%H:%M:%S}'.format(goal_end_time))
+            goal = Goal(target=self.request.get('goal' + str(i)),
+                        expected_time = (goal_end_time),
+                        username=self.request.get("username")
+                        # expected_day = self.request.get('day_of_goal')
+                        )
+            goal.put()
+            final_time = datetime.now(tz = pytz.utc) + timedelta(hours = timeHours, minutes = timeMinutes)
+            # final_time = final_time.astimezone(timezone('US/Pacific'))
 
-        goal = Goal(target=self.request.get('goal'),
-                    expected_time = (goal_end_time),
-                    username=self.request.get("username")
-                    # expected_day = self.request.get('day_of_goal')
-                    )
-        goal.put()
-        final_time = datetime.now(tz = pytz.utc) + timedelta(hours = timeHours, minutes = timeMinutes)
-        final_time = final_time.astimezone(timezone('US/Pacific'))
-
-        goal.expected_time = final_time
+            goal.expected_time = final_time
+            goals_list.append(goal)
 
         goal_display = {
-            'goal': goal,
+            'input_forum': '',
         }
-        self.response.write(results_templates.render(goal_display))
+        for goal_obj in goals_list:
+            goal_display['input_forum'] += '<div>%s %s</div>' % (goal_obj.target, goal_obj.expected_time.strftime('%m-%d-%Y %H:%M'))
+        self.response.write(template.render(goal_display))
 
 class CreateProfile(webapp2.RequestHandler):
     def get(self):
