@@ -206,7 +206,7 @@ class TestHandler(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/create_goal', CreateGoals),
-    # ('/create_profile', CreateProfile),
+    ('/create_profile', CreateProfile),
     ('/create_user',CreateUser),
     ('/test', TestHandler),
     ('/feed', Feed),
