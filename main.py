@@ -31,15 +31,12 @@ class MainHandler(webapp2.RequestHandler):
             else:
                 self.redirect("/create_user")
         else:
-            # template = env.get_template('login.html')
-            # link = users.create_login_url('/')
-            # sign_in = {
-            # 'sign_in_link' : link}
+            template = env.get_template('login.html')
+            link = users.create_login_url('/')
+            sign_in = {
+            'sign_in_link' : link}
+            self.response.write(template.render(sign_in))
 
-            self.response.write('''
-                Please log in to use our site! <br>
-                <a href="%s">Sign in</a>''' % (
-                    users.create_login_url('/')))
 
 class CreateUser(webapp2.RequestHandler):
     def get(self):
@@ -104,7 +101,7 @@ class CreateGoals(webapp2.RequestHandler):
         }
         for goal_obj in goals_list:
             goal_display['input_forum'] += '<div>%s %s</div>' % (goal_obj.target, goal_obj.expected_time.strftime('%m-%d-%Y %H:%M'))
-        user = users.get_current_user()    
+        user = users.get_current_user()
         cssi_user = User.get_by_id(user.user_id())
         user_info = { 'username' : cssi_user.username,
                     'phone_number' : cssi_user.phone_number,
@@ -121,12 +118,13 @@ class CreateProfile(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
         cssi_user = User.get_by_id(user.user_id())
+        goal_count = len(Goal.query(User.username == cssi_user.username).fetch())
         user_info = { 'username' : cssi_user.username,
                     'phone_number' : cssi_user.phone_number,
                     'quote': cssi_user.quote,
                     'photo' : cssi_user.photo,
                     'goald' : cssi_user.goald,
-                    'goals_created' : cssi_user.goals_created,
+                    'goals_created' : goal_count,
                     'goals_completed' : cssi_user.goals_completed
                     }
         template = env.get_template('profile.html')
@@ -136,15 +134,23 @@ class CreateProfile(webapp2.RequestHandler):
 class Feed(webapp2.RequestHandler):
     def get(self):
         template = env.get_template('feed.html')
+        user = users.get_current_user()
+        cssi_user = User.get_by_id(user.user_id())
+        your_id = cssi_user.username
+        friends = Friend.query(Friend.your_id == your_id).fetch()
+        friend_usernames = [ friend.friend_id for friend in friends ]
+
         goals = Goal.query().fetch()
         usernames = []
-        for task in goals:
-            usernames.append( {'name':task.username} )
+        for goal in goals:
+            if goal.username in friend_usernames:
+                usernames.append( {'name':goal.username} )
 
         #data  = {'usernames':usernames }
         tasks =[]
-        for task in goals:
-            tasks.append( {'goal':task.target} )
+        for goal in goals:
+            if goal.username in friend_usernames:
+                tasks.append( {'goal':goal.target} )
 
 
         data  = {'usernames':usernames , 'tasks':tasks}
@@ -159,10 +165,13 @@ class FriendHandler(webapp2.RequestHandler):
         self.response.write(template.render())
 
     def post(self):
+        user = users.get_current_user()
+        cssi_user = User.get_by_id(user.user_id())
+        your_id = cssi_user.username
         friend_username = self.request.get('username')
         friend_user = User.query(User.username==friend_username).get()
         if friend_user:
-            new_friend = Friend(friend_id= friend_username)
+            new_friend = Friend(friend_id= friend_username, your_id= your_id)
             new_friend.put()
             self.response.write("Friend added")
         else:
