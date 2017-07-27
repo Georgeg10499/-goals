@@ -6,6 +6,7 @@ class Goal(ndb.Model):
     expected_time = ndb.DateTimeProperty()
     # expected_day = ndb.DateProperty()
     username = ndb.StringProperty()
+    completed = ndb.BooleanProperty(default = False)
 
 class User(ndb.Model):
     username = ndb.StringProperty()
