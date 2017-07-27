@@ -104,18 +104,17 @@ class CreateGoals(webapp2.RequestHandler):
         }
         for goal_obj in goals_list:
             goal_display['input_forum'] += '<div>%s %s</div>' % (goal_obj.target, goal_obj.expected_time.strftime('%m-%d-%Y %H:%M'))
-        user = users.get_current_user()
+        user = users.get_current_user()    
         cssi_user = User.get_by_id(user.user_id())
         user_info = { 'username' : cssi_user.username,
                     'phone_number' : cssi_user.phone_number,
                     'quote': cssi_user.quote,
-                    'photo' : cssi_user.photo
+                    'photo' : cssi_user.photo,
+                    'goald' : cssi_user.goald,
+                    'goals_created' : cssi_user.goals_created,
+                    'goals_completed' : cssi_user.goals_completed
                     }
-        goal_display.update({'user_info': { 'username' : cssi_user.username,
-                    'phone_number' : cssi_user.phone_number,
-                    'quote': cssi_user.quote,
-                    'photo' : cssi_user.photo
-                    }})
+        goal_display.update({'user_info': user_info})
         self.response.write(template.render(goal_display))
 
 class CreateProfile(webapp2.RequestHandler):
@@ -165,6 +164,7 @@ class FriendHandler(webapp2.RequestHandler):
         if friend_user:
             new_friend = Friend(friend_id= friend_username)
             new_friend.put()
+            self.response.write("Friend added")
         else:
             self.response.write('User does not exist, please try again <a href="/add_friend"> Search for Friends </a>')
 
