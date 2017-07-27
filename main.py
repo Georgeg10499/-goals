@@ -164,6 +164,7 @@ class FriendHandler(webapp2.RequestHandler):
         if friend_user:
             new_friend = Friend(friend_id= friend_username)
             new_friend.put()
+            self.response.write("Friend added")
         else:
             self.response.write('User does not exist, please try again <a href="/add_friend"> Search for Friends </a>')
 
