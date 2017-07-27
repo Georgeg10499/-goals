@@ -86,7 +86,8 @@ class CreateGoals(webapp2.RequestHandler):
 
             goal = Goal(target=self.request.get('goal' + str(i)),
                         expected_time = (goal_end_time),
-                        username=self.request.get("username")
+                        username=self.request.get("username"),
+                        completed = False
                         # expected_day = self.request.get('day_of_goal')
                         )
             goal.put()

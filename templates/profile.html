@@ -22,14 +22,14 @@
 
 <div id = "bio" >
   <div id="topleft">
-    <img class="pic" src="{{user_info['photo']}}"  width="200" height="240">
+    <img class="pic" src="{{photo}}"  width="200" height="240">
   </div>
     <div id="topright">
       <div class="box" >
-        <h4> {{ user_info['goals_created'] }} <br> Goals Made </h4>
+        <h4> {{goals_created}} <br> Goals Made </h4>
       </div>
       <div class="box" >
-        <h4> {{ user_info['goals_completed'] }} <br> Goals Completed</h4>
+        <h4> {{ goals_completed }} <br> Goals Completed</h4>
       </div>
       <div class="box" >
         <h4> <img class="pic" src="/resources/photos/gold.jpg" width="60" height="60"> <br> Goal'd Earned: {{user_info['goald']}}</h4>
@@ -41,19 +41,11 @@
 <div id="content">
     <div id= "left_content">
       <h2>
-        Welcome {{ user_info['username'] }}
+        Welcome {{ username }}
       </h2>
 
       <h3> Quote </h3>
-<<<<<<< HEAD
-      <p> {{ quote }} </p>
-<<<<<<< HEAD
       <p>  {{user_info['quote']}} </p>
-=======
->>>>>>> 0c9c993811178691b476f91b21acf9fd548f2456
-=======
-      <p> {{ user_info['quote'] }} </p>
->>>>>>> 463f44d1d51e86759b59ad44b1af6bc1efee4b49
 
       <h3> Friends </h3>
       <ul>
@@ -69,25 +61,28 @@
   <div id="right">
     <div class = "post">
       <h3 class="title"> Today </h3>
-
-      <div id = "list" >
-      <form method="POST" action="/goal_complete">
+      <p>
         {{ input_forum }}
-        <input type="submit" value="Submit">
-      </form>
-    </div>
-
+      </p>
     </div>
 
     <div class = "post">
       <h3 class="title" > Yesterday </h3>
       <p>
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+        irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
       </p>
     </div>
 
     <div class = "post">
       <h3 class="title" > Last Week </h3>
       <p>
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+        incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+        irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
       </p>
     </div>
 
