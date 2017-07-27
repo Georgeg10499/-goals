@@ -92,7 +92,7 @@ class CreateGoals(webapp2.RequestHandler):
                         )
             goal.put()
             final_time = datetime.now(tz = pytz.utc) + timedelta(hours = timeHours, minutes = timeMinutes)
-            # final_time = final_time.astimezone(timezone('US/Pacific'))
+            final_time = final_time.astimezone(timezone('US/Pacific'))
 
             goal.expected_time = final_time
             goals_list.append(goal)
