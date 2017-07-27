@@ -196,6 +196,18 @@ class Feed(webapp2.RequestHandler):
         # goals_dict = {}
         # for task in goals:
 
+class FriendHandler(webapp2.RequestHandler):
+    def get(self):
+        template = env.get_template('search.html')
+        self.response.write(template.render())
+
+    def post(self):
+        friend_username = self.request.get('username')
+        friend_user = User.query(User.username==friend_username).get()
+        friend_id = friend_user.user_id()
+        self.response.write(str(friend_user) + str(friend_id))
+
+
 class TestHandler(webapp2.RequestHandler):
     def get(self):
         self.response.write('Hello')
@@ -219,5 +231,6 @@ app = webapp2.WSGIApplication([
     ('/create_user',CreateUser),
     ('/test', TestHandler),
     ('/feed', Feed),
-    ('/sign_up', SignUpHandler)
+    ('/sign_up', SignUpHandler),
+    ('/add_friend', FriendHandler)
 ], debug=True)

@@ -12,3 +12,6 @@ class User(ndb.Model):
     phone_number = ndb.StringProperty()
     quote = ndb.StringProperty()
     photo = ndb.StringProperty()
+
+class Friend(ndb.Model):
+    friend_id = ndb.StringProperty()
