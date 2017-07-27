@@ -84,6 +84,8 @@ class CreateUser(webapp2.RequestHandler):
             quote=self.request.get('quote'),
             photo=self.request.get('photo'),
             goald = 0,
+            goals_created = 0,
+            goals_completed = 0,
             id=user.user_id())
         test = repr(cssi_user)
 
@@ -146,7 +148,10 @@ class CreateProfile(webapp2.RequestHandler):
         user_info = { 'username' : cssi_user.username,
                     'phone_number' : cssi_user.phone_number,
                     'quote': cssi_user.quote,
-                    'photo' : cssi_user.photo
+                    'photo' : cssi_user.photo,
+                    'goald' : cssi_user.goald,
+                    'goals_created' : cssi_user.goals_created,
+                    'goals_completed' : cssi_user.goals_completed
                     }
         template = env.get_template('profile.html')
         self.response.write(template.render(user_info))
@@ -206,7 +211,7 @@ class TestHandler(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/create_goal', CreateGoals),
-    # ('/create_profile', CreateProfile),
+    ('/create_profile', CreateProfile),
     ('/create_user',CreateUser),
     ('/test', TestHandler),
     ('/feed', Feed),
