@@ -32,7 +32,7 @@
         <h4> {{ user_info['goals_completed'] }} <br> Goals Completed</h4>
       </div>
       <div class="box" >
-        <h4> <img class="pic" src="/resources/photos/gold.jpg" width="60" height="60"> <br> Goal'd Earned: {{goald}}</h4>
+        <h4> <img class="pic" src="/resources/photos/gold-coin.png" width="60" height="60"> <br> Goal'd Earned {{user_info['goald']}}</h4>
       </div>
     </div>
 </div>
@@ -41,7 +41,8 @@
 <div id="content">
     <div id= "left_content">
       <h2>
-        Welcome {{ user_info['username'] }}
+        Welcome
+        <p> {{ user_info['username'] }} </p>
       </h2>
 
       <h3> Quote </h3>
