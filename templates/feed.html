@@ -19,23 +19,25 @@
         &nbsp;|&nbsp;
         <a href= "create_profile"> My Profile </a>
       </div>
-      <div class = "anotherBlock">
-        <div>
-          <h2>Usernames</h2>
-          {% for user in usernames %}
-            <li>
-              My user name is {{ user.name }} and I acomplished my goal 
-            </li>
-          {% endfor %}
-        </div>
-        <div>
-          <h2>Goals</h2>
-          {% for task in tasks %}
-            <li>
-              {{ task.goal }}
-            </li>
-          {% endfor %}
-        </div>
+
+    </div>
+
+    <div class = "anotherBlock">
+      <div>
+        <h2>Usernames</h2>
+        {% for user in usernames %}
+          <li>
+            My user name is {{ user.name }} and I acomplished my goal
+          </li>
+        {% endfor %}
+      </div>
+      <div>
+        <h2>Goals</h2>
+        {% for task in tasks %}
+          <li>
+            {{ task.goal }}
+          </li>
+        {% endfor %}
       </div>
     </div>
   </body>
