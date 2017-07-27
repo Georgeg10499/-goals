@@ -20,7 +20,7 @@
 }
 
 body {
-  background-image: url("photos/wood.jpg");
+  background-color: #BC8F8F;
 }
 #bio {
   display: flex;
@@ -42,7 +42,7 @@ body {
 #topright {
   display: flex;
   flex-direction: row;
-  color: #c0B283;
+  color: black;
   font-family: 'Quicksand', sans-serif;
   font-size: 40px;
 }
@@ -86,7 +86,7 @@ body {
   border-style: double;
   margin-top: 10px;
   margin-bottom: 10px;
-  color: #c0B283;
+  color: black;
   font-family: 'Quicksand', sans-serif;
   background-color: #DCD0c0;
   font-size: 40px;
