@@ -22,14 +22,14 @@
 
 <div id = "bio" >
   <div id="topleft">
-    <img class="pic" src="{{photo}}"  width="200" height="240">
+    <img class="pic" src="{{user_info['photo']}}"  width="200" height="240">
   </div>
     <div id="topright">
       <div class="box" >
-        <h4> {{goals_created}} <br> Goals Made </h4>
+        <h4> {{ user_info['goals_created'] }} <br> Goals Made </h4>
       </div>
       <div class="box" >
-        <h4> {{ goals_completed }} <br> Goals Completed</h4>
+        <h4> {{ user_info['goals_completed'] }} <br> Goals Completed</h4>
       </div>
       <div class="box" >
         <h4> <img class="pic" src="/resources/photos/gold.jpg" width="60" height="60"> <br> Goal'd Earned: {{goald}}</h4>
@@ -41,11 +41,11 @@
 <div id="content">
     <div id= "left_content">
       <h2>
-        Welcome {{ username }}
+        Welcome {{ user_info['username'] }}
       </h2>
 
       <h3> Quote </h3>
-      <p> {{ quote }} </p>
+      <p> {{ user_info['quote'] }} </p>
 
       <h3> Friends </h3>
       <ul>
