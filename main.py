@@ -69,7 +69,6 @@ class SignUpHandler(webapp2.RequestHandler):
 
 class CreateGoals(webapp2.RequestHandler):
      def get(self):
-        #goal1 = Goal(goal ="The first goal")
         template = env.get_template('main.html')
         self.response.write(template.render())
 
