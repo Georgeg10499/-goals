@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title> Sign Up </title>
+    <link rel= "stylesheet" href="/resources/signup.css" >
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  </head>
+  <body>
+    <div id = "header">
+      <div id= "header_text">
+        <h1> #Goals </h1>
+      </div>
+    </div>
+
+    <div id="content">
+      Welcome to our site, {{email_address}} !  Please sign up! <br>
+      <form method="post" action="/create_user"> <br>
+        Enter your username:
+        <input type="text" name="username"> <br>
+        Enter your phone number:
+        <input type="text" name="phone_number"> <br>
+        Enter a quote:
+        <input type="text" name="quote"> <br>
+        Enter a link to a photo:
+        <input type="text" name= "photo"> <br>
+        <input type="submit">
+      </form>
+  </div>
+  </body>
+</html>

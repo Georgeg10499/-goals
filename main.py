@@ -41,7 +41,6 @@ class CreateUser(webapp2.RequestHandler):
         user = users.get_current_user()
         template = env.get_template('profile.html')
 
-        if user:
             email_address = user.nickname()
             cssi_user = User.get_by_id(user.user_id())
             signout_link_html = '<a href="%s">sign out</a>' % (
