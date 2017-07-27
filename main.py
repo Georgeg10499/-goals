@@ -92,7 +92,7 @@ class CreateGoals(webapp2.RequestHandler):
                         )
             goal.put()
             final_time = datetime.now(tz = pytz.utc) + timedelta(hours = timeHours, minutes = timeMinutes)
-            # final_time = final_time.astimezone(timezone('US/Pacific'))
+            final_time = final_time.astimezone(timezone('US/Pacific'))
 
             goal.expected_time = final_time
             goals_list.append(goal)
@@ -149,6 +149,17 @@ class CreateProfile(webapp2.RequestHandler):
                         ''' + filler + ''' <br> '''
 
         goal_display.update({'user_info': user_info})
+        account_sid = "AC421e208e540df7fc2f79ece8da7ef47a"
+        # Your Auth Token from twilio.com/console
+        auth_token  = ""
+
+        url = 'https://api.twilio.com/2010-04-01/Accounts/%s/Messages' % account_sid
+        payload_dict = {'To': '', 'From': '', 'Body': 'Here are your goals'}
+        payload = urllib.urlencode(payload_dict)
+        authorization_header = "Basic %s" % base64.b64encode("%s:%s" % (account_sid, auth_token))
+        urlfetch.fetch(url, payload=payload, headers={
+        "Authorization": authorization_header
+        }, method="POST", validate_certificate=True)
         template = env.get_template('profile.html')
         self.response.write(template.render(goal_display))
 
@@ -214,28 +225,28 @@ class GoalComplete (webapp2.RequestHandler):
 
 
 
-class TestHandler(webapp2.RequestHandler):
-    def get(self):
-        self.response.write('Hello')
-        # Your Account SID from twilio.com/console
-        account_sid = "AC421e208e540df7fc2f79ece8da7ef47a"
-        # Your Auth Token from twilio.com/console
-        auth_token  = ""
-
-        url = 'https://api.twilio.com/2010-04-01/Accounts/%s/Messages' % account_sid
-        payload_dict = {'To': '', 'From': '', 'Body': 'Hello'}
-        payload = urllib.urlencode(payload_dict)
-        authorization_header = "Basic %s" % base64.b64encode("%s:%s" % (account_sid, auth_token))
-        urlfetch.fetch(url, payload=payload, headers={
-        "Authorization": authorization_header
-        }, method="POST", validate_certificate=True)
+# class TestHandler(webapp2.RequestHandler):
+#     def get(self):
+#         self.response.write('Hello')
+#         # Your Account SID from twilio.com/console
+#         account_sid = "AC421e208e540df7fc2f79ece8da7ef47a"
+#         # Your Auth Token from twilio.com/console
+#         auth_token  = ""
+#
+#         url = 'https://api.twilio.com/2010-04-01/Accounts/%s/Messages' % account_sid
+#         payload_dict = {'To': '', 'From': '', 'Body': 'Hello'}
+#         payload = urllib.urlencode(payload_dict)
+#         authorization_header = "Basic %s" % base64.b64encode("%s:%s" % (account_sid, auth_token))
+#         urlfetch.fetch(url, payload=payload, headers={
+#         "Authorization": authorization_header
+#         }, method="POST", validate_certificate=True)
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler),
     ('/create_goal', CreateGoals),
     ('/create_profile', CreateProfile),
     ('/create_user',CreateUser),
-    ('/test', TestHandler),
+    # ('/test', TestHandler),
     ('/feed', Feed),
     ('/sign_up', SignUpHandler),
     ('/add_friend', FriendHandler),

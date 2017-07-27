@@ -16,12 +16,12 @@
 #header h1 {
     font-size: 75px;
     text-align: center;
-    color: #c0B283;
+    color: black;
     font-family: 'Quicksand', sans-serif;
 }
 
 body {
-  background-image: url("photos/wood.jpg");
+  background-color: #BC8F8F;
 }
 
 .anotherBlock{
