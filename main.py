@@ -37,11 +37,10 @@ class MainHandler(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
         template = env.get_template('user.html')
-        # If the user is logged in...
+
         if user:
             email_address = user.nickname()
-            # We could also do a standard query, but ID is special and it
-            # has a special method to retrieve entries using it.
+
             cssi_user = User.get_by_id(user.user_id())
             signout_link_html = '<a href="%s">sign out</a>' % (
                 users.create_logout_url('/'))
@@ -49,7 +48,6 @@ class MainHandler(webapp2.RequestHandler):
             sign_out = {
             'sign_out_link' : link}
 
-            # If the user has previously been to our site, we greet them!
             if cssi_user:
                 template = env.get_template('main.html')
                 self.response.write(template.render(sign_out))
@@ -66,28 +64,13 @@ class CreateUser(webapp2.RequestHandler):
         user = users.get_current_user()
         template = env.get_template('profile.html')
 
-        # If the user is logged in...
         if user:
             email_address = user.nickname()
-            # We could also do a standard query, but ID is special and it
-            # has a special method to retrieve entries using it.
             cssi_user = User.get_by_id(user.user_id())
             signout_link_html = '<a href="%s">sign out</a>' % (
                 users.create_logout_url('/'))
-            # If the user has previously been to our site, we greet them!
-            if cssi_user:
-                self.response.write('''
-                    Welcome %s %s (%s)! <br> %s <br>''' % (
-                        cssi_user.username,
-                        cssi_user.phone_number,
-                        email_address,
-                        signout_link_html))
+            self.redirect("/sign_up")
 
-            # If the user hasn't been to our site, we ask them to sign up
-            else:
-                self.redirect("/sign_up")
-
-        # Otherwise, the user isn't logged in!
         else:
             self.response.write('''
                 Please log in to use our site! <br>
@@ -96,16 +79,12 @@ class CreateUser(webapp2.RequestHandler):
 
     def post(self):
         user = users.get_current_user()
-        # if not user:
-        #     # You shouldn't be able to get here without being logged in
         cssi_user = User(
             username=self.request.get('username'),
             phone_number=self.request.get('phone_number'),
             quote=self.request.get('quote'),
             photo=self.request.get('photo'),
             goald = 0,
-            # ID Is a special field that all ndb Models have, and esnures
-            # uniquenes (only one user in the datastore can have this ID.
             id=user.user_id())
         test = repr(cssi_user)
 
@@ -119,7 +98,7 @@ class SignUpHandler(webapp2.RequestHandler):
         user = users.get_current_user()
         nick_name = user.nickname()
         user_info_dict = { 'email_address' : nick_name }
-        self.response.write(template.render())
+        self.response.write(template.render(user_info_dict))
 
 class CreateGoals(webapp2.RequestHandler):
      def get(self):
@@ -154,10 +133,6 @@ class CreateGoals(webapp2.RequestHandler):
         }
         self.response.write(results_templates.render(goal_display))
 
-        #goal.put()
-        #goal = CreateGoal(goal=self.request.get('goal')).put()
-
-
 class CreateProfile(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
@@ -170,17 +145,6 @@ class CreateProfile(webapp2.RequestHandler):
         template = env.get_template('profile.html')
         self.response.write(template.render(user_info))
 
-
-
-    # def post(self):
-    #     results_templates = env.get_template('profileResults.html')
-    #
-    #     profile = Profile(name=self.request.get('user_name'))
-    #     profile.put()
-    #     profile_display = {
-    #         'profile': profile,
-    #     }
-    #     self.response.write(results_templates.render(profile_display))
 
 class Feed(webapp2.RequestHandler):
     def get(self):
@@ -215,7 +179,6 @@ class FriendHandler(webapp2.RequestHandler):
             new_friend.put()
         else:
             self.response.write('User does not exist, please try again <a href="/add_friend"> Search for Friends </a>')
-
 
 
 class TestHandler(webapp2.RequestHandler):

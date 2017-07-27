@@ -28,5 +28,9 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-
+    font-family: 'Quicksand', sans-serif;
+    background-color: #DCD0c0;
+    border: 5px solid white;
+    text-align: center;
+    margin: 10px;
 }
