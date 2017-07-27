@@ -8,6 +8,8 @@ class Goal(ndb.Model):
     username = ndb.StringProperty()
     completed = ndb.BooleanProperty(default = False)
 
+
+
 class User(ndb.Model):
     username = ndb.StringProperty()
     phone_number = ndb.StringProperty()
