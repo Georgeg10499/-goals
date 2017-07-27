@@ -7,7 +7,7 @@
 }
 
 #header_text {
-  color: #c0B283;
+  color: black;
   font-family: 'Quicksand', sans-serif;
   font-size: 30px;
 }
@@ -15,7 +15,7 @@
 #header h1 {
     font-size: 75px;
     text-align: center;
-    color: #c0B283;
+    color: black;
     font-family: 'Quicksand', sans-serif;
 }
 
@@ -28,7 +28,7 @@ body {
   justify-content: center;
   margin-top: 25px;
   margin-bottom: 25px;
-  color: #c0B283;
+  color: black;
   font-family: 'Quicksand', sans-serif;
   font-size: 40px;
   text-align: center;
@@ -63,7 +63,7 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  color: #c0B283;
+  color: black;
   font-family: 'Quicksand', sans-serif;
   font-size: 40px;
   margin-left: 7%;
@@ -72,7 +72,7 @@ body {
 
 #left_content{
   flex-shrink: 1.5;
-  margin: 10px;
+  margin-right: 2%;
 }
 
 .pic{
@@ -80,6 +80,8 @@ body {
 }
 
 .post{
+  margin-right: 200px;
+  width: 140%;
   border: 5px solid white;
   border-style: double;
   margin-top: 10px;
@@ -97,4 +99,10 @@ body {
 
 #list {
   display: inline;
+}
+
+#right{
+  margin-left: 10%;
+  margin-right: 8%;
+  width: 40%;
 }
