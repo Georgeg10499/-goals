@@ -35,13 +35,8 @@ env=jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
-<<<<<<< HEAD
-        # template = env.get_template('user.html')
-        # If the user is logged in...
-=======
         template = env.get_template('user.html')
 
->>>>>>> 838ccc515f63e0cac174b00b59926ed4d690f08e
         if user:
             email_address = user.nickname()
 
@@ -111,7 +106,6 @@ class CreateGoals(webapp2.RequestHandler):
         self.response.write(template.render())
 
      def post(self):
-<<<<<<< HEAD
          goals_length = int(self.request.get("number_of_goals"))
          results_templates = env.get_template('profile.html')
          goals_list = []
@@ -144,33 +138,6 @@ class CreateGoals(webapp2.RequestHandler):
          self.response.write(results_templates.render(goal_display))
 
          self.response.write('Done')
-=======
-        results_templates = env.get_template('results.html')
-
-        timeHours=int(self.request.get('hour'))
-        timeMinutes=int(self.request.get('minutes'))
-
-        goal_end_time = datetime.now() + timedelta(hours = timeHours, minutes = timeMinutes)
-        #goal_end_time = goal_end_time.astimezone(timezone('US/Pacific'))
-        logging.info('The current time'+ '{:%H:%M:%S}'.format(datetime.now(tz = pytz.utc)))
-        logging.info('The new goal time'+ '{:%H:%M:%S}'.format(goal_end_time))
-
-        goal = Goal(target=self.request.get('goal'),
-                    expected_time = (goal_end_time),
-                    username=self.request.get("username")
-                    # expected_day = self.request.get('day_of_goal')
-                    )
-        goal.put()
-        final_time = datetime.now(tz = pytz.utc) + timedelta(hours = timeHours, minutes = timeMinutes)
-        final_time = final_time.astimezone(timezone('US/Pacific'))
-
-        goal.expected_time = final_time
-
-        goal_display = {
-            'goal': goal,
-        }
-        self.response.write(results_templates.render(goal_display))
->>>>>>> 838ccc515f63e0cac174b00b59926ed4d690f08e
 
 class CreateProfile(webapp2.RequestHandler):
     def get(self):
