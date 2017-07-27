@@ -31,6 +31,11 @@ class MainHandler(webapp2.RequestHandler):
             else:
                 self.redirect("/create_user")
         else:
+            # template = env.get_template('login.html')
+            # link = users.create_login_url('/')
+            # sign_in = {
+            # 'sign_in_link' : link}
+
             self.response.write('''
                 Please log in to use our site! <br>
                 <a href="%s">Sign in</a>''' % (
@@ -38,12 +43,6 @@ class MainHandler(webapp2.RequestHandler):
 
 class CreateUser(webapp2.RequestHandler):
     def get(self):
-        user = users.get_current_user()
-        template = env.get_template('profile.html')
-        email_address = user.nickname()
-        cssi_user = User.get_by_id(user.user_id())
-        signout_link_html = '<a href="%s">sign out</a>' % (
-                users.create_logout_url('/'))
         self.redirect("/sign_up")
 
     def post(self):
@@ -55,11 +54,10 @@ class CreateUser(webapp2.RequestHandler):
             photo=self.request.get('photo'),
             goald = 0,
             id=user.user_id())
-        test = repr(cssi_user)
 
         cssi_user.put()
-        self.response.write('Thanks for signing up, %s! Click here to access the <a href="/"> site </a> %s' %
-            (cssi_user.username, test))
+        self.response.write('Thanks for signing up, %s! Click here to access the <a href="/"> site </a> ' %
+            (cssi_user.username))
 
 class SignUpHandler(webapp2.RequestHandler):
     def get(self):
@@ -71,7 +69,6 @@ class SignUpHandler(webapp2.RequestHandler):
 
 class CreateGoals(webapp2.RequestHandler):
      def get(self):
-        #goal1 = Goal(goal ="The first goal")
         template = env.get_template('main.html')
         self.response.write(template.render())
 
