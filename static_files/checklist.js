@@ -6,6 +6,7 @@ var num = 2;
 function setUpHandlers (){
   $("#add_item").click(addItems);
   $("#remove_item").click(removeItems);
+  // $("#submitting").click(pressSumbit)
 }
 
 function addItems(event){
@@ -26,5 +27,11 @@ function removeItems(event){
   $("#check_list .list_item").eq(-1).remove();
 }
 
+// function checking_goals(event){
+//   var size = $(".list_item").size()
+//   if($("#num_of_goals").val() !=  size){
+//       alert("Please put in the right amount of goals you have created");
+//   }
+// }
 
 $(document).ready(setUpHandlers);
