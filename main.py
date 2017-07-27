@@ -105,9 +105,11 @@ class CreateUser(webapp2.RequestHandler):
             # ID Is a special field that all ndb Models have, and esnures
             # uniquenes (only one user in the datastore can have this ID.
             id=user.user_id())
+        test = repr(cssi_user)
+
         cssi_user.put()
-        self.response.write('Thanks for signing up, %s! Click here to access the <a href="/"> site </a>' %
-            cssi_user.username, )
+        self.response.write('Thanks for signing up, %s! Click here to access the <a href="/"> site </a> %s' %
+            (cssi_user.username, test))
 
 class SignUpHandler(webapp2.RequestHandler):
     def get(self):
@@ -156,9 +158,17 @@ class CreateGoals(webapp2.RequestHandler):
 
 class CreateProfile(webapp2.RequestHandler):
     def get(self):
-        user_query = User.query().fetch()
+        user = users.get_current_user()
+        cssi_user = User.get_by_id(user.user_id())
+        user_info = { 'username' : cssi_user.username,
+                    'phone_number' : cssi_user.phone_number,
+                    'quote': cssi_user.quote,
+                    'photo' : cssi_user.photo
+                    }
         template = env.get_template('profile.html')
-        self.response.write(template.render())
+        self.response.write(template.render(user_info))
+
+
 
     # def post(self):
     #     results_templates = env.get_template('profileResults.html')
