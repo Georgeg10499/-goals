@@ -23,3 +23,10 @@
 body {
   background-image: url("photos/wood.jpg");
 }
+
+.anotherBlock{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+
+}

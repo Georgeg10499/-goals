@@ -177,9 +177,13 @@ class Feed(webapp2.RequestHandler):
         for task in goals:
             usernames.append( {'name':task.username} )
 
+        #data  = {'usernames':usernames }
+        tasks =[]
+        for task in goals:
+            tasks.append( {'goal':task.target} )
 
-        data  = {'usernames':usernames }
-        #   data.append(task.username)
+
+        data  = {'usernames':usernames , 'tasks':tasks}
         self.response.write(template.render(data))
         # self.response.write(str(goals))
         # goals_dict = {}
