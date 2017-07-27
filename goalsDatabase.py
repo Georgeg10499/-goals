@@ -13,6 +13,8 @@ class User(ndb.Model):
     quote = ndb.StringProperty()
     photo = ndb.StringProperty()
     goald = ndb.IntegerProperty()
+    goals_created = ndb.IntegerProperty()
+    goals_completed = ndb.IntegerProperty()
 
 goals = Goal.query().fetch()
 
