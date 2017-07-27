@@ -1,19 +1,3 @@
-#!/usr/bin/env python
-#
-# Copyright 2007 Google Inc.
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
 import webapp2
 import jinja2
 import logging
@@ -29,20 +13,14 @@ from goalsDatabase import Friend
 #from functions import addGoals
 from google.appengine.api import users
 
-
 env=jinja2.Environment(loader=jinja2.FileSystemLoader('templates'))
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         user = users.get_current_user()
-        template = env.get_template('user.html')
 
         if user:
-            email_address = user.nickname()
-
             cssi_user = User.get_by_id(user.user_id())
-            signout_link_html = '<a href="%s">sign out</a>' % (
-                users.create_logout_url('/'))
             link = users.create_logout_url('/')
             sign_out = {
             'sign_out_link' : link}
@@ -63,18 +41,11 @@ class CreateUser(webapp2.RequestHandler):
         user = users.get_current_user()
         template = env.get_template('profile.html')
 
-        if user:
             email_address = user.nickname()
             cssi_user = User.get_by_id(user.user_id())
             signout_link_html = '<a href="%s">sign out</a>' % (
                 users.create_logout_url('/'))
             self.redirect("/sign_up")
-
-        else:
-            self.response.write('''
-                Please log in to use our site! <br>
-                <a href="%s">Sign in</a>''' % (
-                    users.create_login_url('/')))
 
     def post(self):
         user = users.get_current_user()
@@ -106,38 +77,31 @@ class CreateGoals(webapp2.RequestHandler):
         self.response.write(template.render())
 
      def post(self):
-         goals_length = int(self.request.get("number_of_goals"))
-         results_templates = env.get_template('profile.html')
-         goals_list = []
-         for i in range(1, goals_length+1):
-             goals_dict = {}
-             timeHours = int(self.request.get('hour' + str(i)))
-             timeMinutes= int(self.request.get('minutes' + str(i)))
-             logging.info(timeHours)
-             goal_end_time = datetime.now() + timedelta(hours = timeHours, minutes = timeMinutes)
-            #  goal_end_time = goal_end_time.astimezone(timezone('US/Pacific'))
-             logging.info('The current time'+ '{:%H:%M:%S}'.format(datetime.now(tz = pytz.utc)))
-             logging.info('The new goal time'+ '{:%H:%M:%S}'.format(goal_end_time))
-             goal = Goal(target= self.request.get('goal' + str(i)),
-                         expected_time = goal_end_time,
-                         username=self.request.get("username")
-                         # expected_day = self.request.get('day_of_goal')
-                       )
-             goal.put()
-             final_time = datetime.now(tz = pytz.utc) + timedelta(hours = int(timeHours), minutes = int(timeMinutes))
-             final_time = final_time.astimezone(timezone('US/Pacific'))
+        results_templates = env.get_template('results.html')
 
-             goal.expected_time = final_time
+        timeHours=int(self.request.get('hour'))
+        timeMinutes=int(self.request.get('minutes'))
 
-             goals_list.append(goal)
+        goal_end_time = datetime.now() + timedelta(hours = timeHours, minutes = timeMinutes)
+        #goal_end_time = goal_end_time.astimezone(timezone('US/Pacific'))
+        logging.info('The current time'+ '{:%H:%M:%S}'.format(datetime.now(tz = pytz.utc)))
+        logging.info('The new goal time'+ '{:%H:%M:%S}'.format(goal_end_time))
 
-         goal_display = {'input_forum': ''}
-         for goal_obj in goals_list:
-             logging.info(goal_obj.target)
-             goal_display['input_forum'] += '<div>%s</div><div>%s</div><br>' % (goal_obj.expected_time, goal_obj.target)
-         self.response.write(results_templates.render(goal_display))
+        goal = Goal(target=self.request.get('goal'),
+                    expected_time = (goal_end_time),
+                    username=self.request.get("username")
+                    # expected_day = self.request.get('day_of_goal')
+                    )
+        goal.put()
+        final_time = datetime.now(tz = pytz.utc) + timedelta(hours = timeHours, minutes = timeMinutes)
+        final_time = final_time.astimezone(timezone('US/Pacific'))
 
-         self.response.write('Done')
+        goal.expected_time = final_time
+
+        goal_display = {
+            'goal': goal,
+        }
+        self.response.write(results_templates.render(goal_display))
 
 class CreateProfile(webapp2.RequestHandler):
     def get(self):

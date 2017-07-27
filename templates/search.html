@@ -1,13 +1,30 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title></title>
+    <title> Search </title>
+    <link rel= "stylesheet" href="/resources/search.css" >
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
   </head>
   <body>
-    <form method="post" action=""> <br>
-    <input type="text" name="username"> <br>
-    Enter your friend's username:
-    <input type="submit">
-    </form>
+    <div id = "header">
+      <div id= "header_text">
+        <h1> #Goals </h1>
+        <p> <a href= "/"> Main Page </a>
+          &nbsp;|&nbsp;
+          <a href= "feed"> Feed </a>
+          {{signout_link_html}}
+
+      </div>
+    </div>
+
+    <div id="content">
+      <form method="post" action=""> <br>
+        <input type="text" name="username"> <br>
+        Enter your friend's username:
+        <input type="submit">
+      </form>
+    </div>
+    
   </body>
 </html>

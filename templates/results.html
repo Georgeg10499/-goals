@@ -1,12 +1,27 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <title></title>
+    <title> Search </title>
+    <link rel= "stylesheet" href="/resources/results.css" >
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
   </head>
   <body>
-    <h1>Done</h1>
-    <b>Goal:</b> {{goal.target}} {{goal.expected_time.strftime('%Y-%m-%d %H:%M:%S')}}
-    <p> Click here to access your profile site <a href='create_profile'>My Profile</a></p>
+    <div id = "header">
+      <div id= "header_text">
+        <h1> #Goals </h1>
+        <p> <a href= "/"> Main Page </a>
+          &nbsp;|&nbsp;
+          <a href= "feed"> Feed </a>
+          {{signout_link_html}}
+
+      </div>
+    </div>
+
+    <div id="content">
+      <h1>Done</h1>
+      <b>Goal:</b> {{goal.target}} {{goal.expected_time.strftime('%Y-%m-%d %H:%M:%S')}}
+      <p> Click here to access your profile site <a href='create_profile'>My Profile</a></p>
+    </div>
   </body>
 </html>
