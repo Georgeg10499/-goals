@@ -72,10 +72,9 @@ class CreateGoals(webapp2.RequestHandler):
         self.response.write(template.render())
 
      def post(self):
-        template = env.get_template('results.html')
+        template = env.get_template('profile.html')
         num_of_goals = int(self.request.get("number_of_goals"))
         goals_list = []
-        
         for i in range(1,num_of_goals+1):
             timeHours=int(self.request.get('hour' + str(i)))
             timeMinutes=int(self.request.get('minutes' + str(i)))
@@ -102,7 +101,6 @@ class CreateGoals(webapp2.RequestHandler):
         }
         checkbox_counter = 0
         for goal_obj in goals_list:
-<<<<<<< HEAD
             filler = '%s %s' % (goal_obj.target, goal_obj.expected_time.strftime('%m-%d-%Y %H:%M'))
             goal_display['input_forum'] += '''
                      <input type="checkbox" name="is_complete''' + str(checkbox_counter) + ''' " >
@@ -120,20 +118,6 @@ class CreateGoals(webapp2.RequestHandler):
                     'goals_completed' : cssi_user.goals_completed
                     }
         goal_display.update({'user_info': user_info})
-=======
-            goal_display['input_forum'] += '<div>%s %s</div>' % (goal_obj.target, goal_obj.expected_time.strftime('%m-%d-%Y %H:%M'))
-        # user = users.get_current_user()
-        # cssi_user = User.get_by_id(user.user_id())
-        # user_info = { 'username' : cssi_user.username,
-        #             'phone_number' : cssi_user.phone_number,
-        #             'quote': cssi_user.quote,
-        #             'photo' : cssi_user.photo,
-        #             'goald' : cssi_user.goald,
-        #             'goals_created' : cssi_user.goals_created,
-        #             'goals_completed' : cssi_user.goals_completed
-        #             }
-        # goal_display.update({'user_info': user_info})
->>>>>>> 463f44d1d51e86759b59ad44b1af6bc1efee4b49
         self.response.write(template.render(goal_display))
 
 class CreateProfile(webapp2.RequestHandler):
@@ -149,15 +133,8 @@ class CreateProfile(webapp2.RequestHandler):
                     'goals_created' : goal_count,
                     'goals_completed' : cssi_user.goals_completed
                     }
-        goal_display = {
-            'input_forum': '',
-        }
-        goals_list = Goal.query(User.username == cssi_user.username).fetch()
-        for goal_obj in goals_list:
-            goal_display['input_forum'] += '<div>%s %s</div>' % (goal_obj.target, goal_obj.expected_time.strftime('%m-%d-%Y %H:%M'))
-        goal_display.update({'user_info': user_info})
         template = env.get_template('profile.html')
-        self.response.write(template.render(goal_display))
+        self.response.write(template.render(user_info))
 
 
 class Feed(webapp2.RequestHandler):
@@ -213,8 +190,8 @@ class GoalComplete (webapp2.RequestHandler):
         your_id = cssi_user.username
         user_goals = Goals.query(your_id).fetch()
 
-    # def post(self):
-    #     temp =
+    def post(self):
+        temp =
 
 class TestHandler(webapp2.RequestHandler):
     def get(self):
