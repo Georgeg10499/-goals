@@ -12,6 +12,7 @@ class User(ndb.Model):
     phone_number = ndb.StringProperty()
     quote = ndb.StringProperty()
     photo = ndb.StringProperty()
+    goald = ndb.IntegerProperty()
 
 goals = Goal.query().fetch()
 

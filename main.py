@@ -102,6 +102,7 @@ class CreateUser(webapp2.RequestHandler):
             phone_number=self.request.get('phone_number'),
             quote=self.request.get('quote'),
             photo=self.request.get('photo'),
+            goald = 0,
             # ID Is a special field that all ndb Models have, and esnures
             # uniquenes (only one user in the datastore can have this ID.
             id=user.user_id())
