@@ -12,3 +12,14 @@ class User(ndb.Model):
     phone_number = ndb.StringProperty()
     quote = ndb.StringProperty()
     photo = ndb.StringProperty()
+    goald = ndb.IntegerProperty()
+
+goals = Goal.query().fetch()
+
+def addGoals(self,currentStars, numberOfHours, isCompleted):
+    if(isCompleted == True):
+        modifiedGoal = currentStars + numberOfHours
+    return modifiedGoal
+
+class Friend(ndb.Model):
+    friend_id = ndb.StringProperty()

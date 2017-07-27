@@ -25,6 +25,7 @@ from pytz import timezone
 import pytz
 from goalsDatabase import Goal
 from goalsDatabase import User
+from goalsDatabase import Friend
 #from functions import addGoals
 from google.appengine.api import users
 
@@ -101,18 +102,22 @@ class CreateUser(webapp2.RequestHandler):
             phone_number=self.request.get('phone_number'),
             quote=self.request.get('quote'),
             photo=self.request.get('photo'),
+            goald = 0,
             # ID Is a special field that all ndb Models have, and esnures
             # uniquenes (only one user in the datastore can have this ID.
             id=user.user_id())
+        test = repr(cssi_user)
+
         cssi_user.put()
-        self.response.write('Thanks for signing up, %s! Click here to access the <a href="/"> site </a>' %
-            cssi_user.username, )
+        self.response.write('Thanks for signing up, %s! Click here to access the <a href="/"> site </a> %s' %
+            (cssi_user.username, test))
 
 class SignUpHandler(webapp2.RequestHandler):
     def get(self):
+        template = env.get_template('signup.html')
         user = users.get_current_user()
-        email_address = user.nickname()
-        template = env.get_template('singup.html')
+        nick_name = user.nickname()
+        user_info_dict = { 'email_address' : nick_name }
         self.response.write(template.render())
 
 class CreateGoals(webapp2.RequestHandler):
@@ -155,31 +160,54 @@ class CreateGoals(webapp2.RequestHandler):
 
          self.response.write('Done')
 
-# class CreateProfile(webapp2.RequestHandler):
-#     def get(self):
-#         # goal_query = Goal.query(Goal.username == "ryan")
-#         # user_query = goal_query.fetch()
-#         # user_name = user_query[0].username
-#         template = env.get_template('profile.html')
-#         self.response.write(template.render())
-#
-#     def post(self):
-#         results_templates = env.get_template('profileResults.html')
-#
-#         profile = Profile(name=self.request.get('user_name'))
-#         profile.put()
-#         profile_display = {
-#             'profile': profile,
-#         }
-#         self.response.write(results_templates.render(profile_display))
+class CreateProfile(webapp2.RequestHandler):
+    def get(self):
+        user = users.get_current_user()
+        cssi_user = User.get_by_id(user.user_id())
+        user_info = { 'username' : cssi_user.username,
+                    'phone_number' : cssi_user.phone_number,
+                    'quote': cssi_user.quote,
+                    'photo' : cssi_user.photo
+                    }
+        template = env.get_template('profile.html')
+        self.response.write(template.render(user_info))
+
 
 class Feed(webapp2.RequestHandler):
     def get(self):
         template = env.get_template('feed.html')
-        self.response.write(template.render())
         goals = Goal.query().fetch()
+        usernames = []
+        for task in goals:
+            usernames.append( {'name':task.username} )
+
+        #data  = {'usernames':usernames }
+        tasks =[]
+        for task in goals:
+            tasks.append( {'goal':task.target} )
+
+
+        data  = {'usernames':usernames , 'tasks':tasks}
+        self.response.write(template.render(data))
+        # self.response.write(str(goals))
         # goals_dict = {}
         # for task in goals:
+
+class FriendHandler(webapp2.RequestHandler):
+    def get(self):
+        template = env.get_template('search.html')
+        self.response.write(template.render())
+
+    def post(self):
+        friend_username = self.request.get('username')
+        friend_user = User.query(User.username==friend_username).get()
+        if friend_user:
+            new_friend = Friend(friend_id= friend_username)
+            new_friend.put()
+        else:
+            self.response.write('User does not exist, please try again <a href="/add_friend"> Search for Friends </a>')
+
+
 
 class TestHandler(webapp2.RequestHandler):
     def get(self):
@@ -204,5 +232,6 @@ app = webapp2.WSGIApplication([
     ('/create_user',CreateUser),
     ('/test', TestHandler),
     ('/feed', Feed),
-    ('/sign_up', SignUpHandler)
+    ('/sign_up', SignUpHandler),
+    ('/add_friend', FriendHandler)
 ], debug=True)
