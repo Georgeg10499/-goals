@@ -15,14 +15,12 @@
       <p> <a href= "/"> Main Page </a>
         &nbsp;|&nbsp;
         <a href= "feed"> Feed </a>
-        {{signout_link_html}}
-
     </div>
   </div>
 
 <div id = "bio" >
   <div id="topleft">
-    <img class="pic" src="{{photo}}"  width="200" height="240">
+    <img class="pic" src="/resources/photos/me.jpg"  width="200" height="240">
   </div>
     <div id="topright">
       <div class="box" >
@@ -41,15 +39,19 @@
 <div id="content">
     <div id= "left_content">
       <h1>
-        Welcome {{username}}
+        Welcome {{profile.name }}
+        <form method="post" action"">
+          <input type="text" name="user_name"></input>
+          <input type="submit"></input>
+        </form>
       </h1>
 
-      <h3> Quote </h3>
-      <p> {{quote}}  </p>
+      <h3> Bio </h3>
+      <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+         incididunt ut labore et dolore magna aliqua.   </p>
       <h3> Friends </h3>
       <ul>
-        <li> Ryan </li>
-        <li> Mary </li>
+        <li> Mary  </li>
         <li> Brenna </li>
         <li> Nick </li>
         <li> Jacob </li>
