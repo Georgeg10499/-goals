@@ -25,3 +25,4 @@ def addGoals(self,currentStars, numberOfHours, isCompleted):
 
 class Friend(ndb.Model):
     friend_id = ndb.StringProperty()
+    your_id = ndb.StringProperty()
