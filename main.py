@@ -75,6 +75,7 @@ class CreateGoals(webapp2.RequestHandler):
         template = env.get_template('results.html')
         num_of_goals = int(self.request.get("number_of_goals"))
         goals_list = []
+        
         for i in range(1,num_of_goals+1):
             timeHours=int(self.request.get('hour' + str(i)))
             timeMinutes=int(self.request.get('minutes' + str(i)))
