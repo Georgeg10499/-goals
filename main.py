@@ -108,6 +108,8 @@ class CreateGoals(webapp2.RequestHandler):
                      ''' + filler + ''' <br> '''
             checkbox_counter += 1
 
+
+
         # user = users.get_current_user()
         # cssi_user = User.get_by_id(user.user_id())
         # user_info = { 'username' : cssi_user.username,
@@ -139,8 +141,13 @@ class CreateProfile(webapp2.RequestHandler):
         }
 
         goals_list = Goal.query(User.username == cssi_user.username).fetch()
+        checkbox_counter = 0
         for goal_obj in goals_list:
-            goal_display['input_forum'] += '<div>%s %s</div>' % (goal_obj.target, goal_obj.expected_time.strftime('%m-%d-%Y %H:%M'))
+            filler = '%s %s' % (goal_obj.target, goal_obj.expected_time.strftime('%m-%d-%Y %H:%M'))
+            goal_display['input_forum'] += '''
+                        <input type="checkbox" name="is_complete''' + str(checkbox_counter) + ''' " >
+                        ''' + filler + ''' <br> '''
+            checkbox_counter += 1
         goal_display.update({'user_info': user_info})
         template = env.get_template('profile.html')
         self.response.write(template.render(goal_display))
