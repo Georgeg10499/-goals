@@ -25,6 +25,7 @@ from pytz import timezone
 import pytz
 from goalsDatabase import Goal
 from goalsDatabase import User
+from goalsDatabase import Friend
 #from functions import addGoals
 from google.appengine.api import users
 
@@ -127,7 +128,7 @@ class CreateGoals(webapp2.RequestHandler):
         self.response.write(template.render())
 
      def post(self):
-        results_templates = env.get_template('profile.html')
+        results_templates = env.get_template('results.html')
 
         timeHours=int(self.request.get('hour'))
         timeMinutes=int(self.request.get('minutes'))
@@ -209,8 +210,12 @@ class FriendHandler(webapp2.RequestHandler):
     def post(self):
         friend_username = self.request.get('username')
         friend_user = User.query(User.username==friend_username).get()
-        friend_id = friend_user.user_id()
-        self.response.write(str(friend_user) + str(friend_id))
+        if friend_user:
+            new_friend = Friend(friend_id= friend_username)
+            new_friend.put()
+        else:
+            self.response.write('User does not exist, please try again <a href="/add_friend"> Search for Friends </a>')
+
 
 
 class TestHandler(webapp2.RequestHandler):
