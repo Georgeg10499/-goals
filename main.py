@@ -87,7 +87,8 @@ class CreateGoals(webapp2.RequestHandler):
             goal = Goal(target=self.request.get('goal' + str(i)),
                         expected_time = (goal_end_time),
                         username=self.request.get("username"),
-                        completed = False
+                        completed = False,
+                        number_of_hours = int(self.request.get('hour' + str(i)))
                         # expected_day = self.request.get('day_of_goal')
                         )
             goal.put()
@@ -141,6 +142,10 @@ class CreateProfile(webapp2.RequestHandler):
         }
 
         goals_list = Goal.query(User.username == cssi_user.username).fetch()
+        # for task in goals_list:
+        #
+        #     task.expected_time = task.expected_time.astimezone(timezone('US/Pacific'))
+
         checkbox_counter = 0
         for goal_obj in goals_list:
             filler = '%s %s' % (goal_obj.target, goal_obj.expected_time.strftime('%m-%d-%Y %H:%M'))

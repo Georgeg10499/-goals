@@ -5,8 +5,10 @@ class Goal(ndb.Model):
     target = ndb.StringProperty()
     expected_time = ndb.DateTimeProperty()
     # expected_day = ndb.DateProperty()
+    
     username = ndb.StringProperty()
     completed = ndb.BooleanProperty(default = False)
+    number_of_hours = ndb.IntegerProperty()
 
 
 
