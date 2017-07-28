@@ -128,13 +128,14 @@ class CreateProfile(webapp2.RequestHandler):
         user = users.get_current_user()
         cssi_user = User.get_by_id(user.user_id())
         goal_count = len(Goal.query(User.username == cssi_user.username).fetch())
+        goal_count2 = len(Goal.query(User.username == cssi_user.username, Goal.completed == True).fetch())
         user_info = { 'username' : cssi_user.username,
                     'phone_number' : cssi_user.phone_number,
                     'quote': cssi_user.quote,
                     'photo' : cssi_user.photo,
                     'goald' : cssi_user.goald,
                     'goals_created' : goal_count,
-                    'goals_completed' : cssi_user.goals_completed
+                    'goals_completed' : goal_count2
                     }
         goal_display = {
             'input_forum': '',
