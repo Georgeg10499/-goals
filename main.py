@@ -228,6 +228,8 @@ class GoalComplete (webapp2.RequestHandler):
             goal = Goal.get_by_id(int(goal_id))
             goal.completed = True
             goal.put()
+            self.redirect("/")
+
 
 
 
