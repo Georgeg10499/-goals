@@ -130,6 +130,14 @@ class CreateProfile(webapp2.RequestHandler):
         cssi_user = User.get_by_id(user.user_id())
         goal_count = len(Goal.query(User.username == cssi_user.username).fetch())
         goal_count2 = len(Goal.query(User.username == cssi_user.username, Goal.completed == True).fetch())
+        completed_list = self.request.get('is_complete', allow_multiple = True)
+        for goal_id in completed_list:
+            goal = Goal.get_by_id(int(goal_id))
+            goal.completed = True
+            count = goal.number_of_hours
+            cssi_user.goald += count
+            goal.put()
+            cssi_user.put()
         user_info = { 'username' : cssi_user.username,
                     'phone_number' : cssi_user.phone_number,
                     'quote': cssi_user.quote,
@@ -157,10 +165,10 @@ class CreateProfile(webapp2.RequestHandler):
         goal_display.update({'user_info': user_info})
         account_sid = "AC421e208e540df7fc2f79ece8da7ef47a"
         # Your Auth Token from twilio.com/console
-        auth_token  = ""
+        auth_token  = "8e0096db271053be309e3308653ed7bf"
 
         url = 'https://api.twilio.com/2010-04-01/Accounts/%s/Messages' % account_sid
-        payload_dict = {'To': '', 'From': '', 'Body': 'Here are your goals'}
+        payload_dict = {'To': '+16265521795', 'From': '+19095528646', 'Body': 'Here are your goals'}
         payload = urllib.urlencode(payload_dict)
         authorization_header = "Basic %s" % base64.b64encode("%s:%s" % (account_sid, auth_token))
         urlfetch.fetch(url, payload=payload, headers={
@@ -211,7 +219,7 @@ class FriendHandler(webapp2.RequestHandler):
         if friend_user:
             new_friend = Friend(friend_id= friend_username, your_id= your_id)
             new_friend.put()
-            self.response.write("Friend added")
+            self.response.write('Friend added! Click here to access the <a href="/"> site </a>')
         else:
             self.response.write('User does not exist, please try again <a href="/add_friend"> Search for Friends </a>')
 
@@ -227,7 +235,12 @@ class GoalComplete (webapp2.RequestHandler):
         for goal_id in completed_list:
             goal = Goal.get_by_id(int(goal_id))
             goal.completed = True
+            user = users.get_current_user()
+            cssi_user = User.get_by_id(user.user_id())
+            count = goal.number_of_hours
+            cssi_user.goald += count
             goal.put()
+            cssi_user.put()
             self.redirect("/")
 
 
